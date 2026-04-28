@@ -1,15 +1,9 @@
-<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Ajp News Dashboard",
-  "schemaVersion": 1,
-  "description": "Daily noon-ET dashboard pulling the most consequential stories from the 39 AJP grantee newsrooms. Updates automatically each day at 12:00 ET via a scheduled task."
-}
-</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AJP Portfolio — Daily News Dashboard</title>
+<title>AJP Portfolio — Daily News — Snapshot 2026-04-27</title>
 <style>
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
@@ -41,8 +35,8 @@ h1 {
   gap: 10px;
   flex-wrap: wrap;
 }
-.dot { width: 6px; height: 6px; background: #2F7C2F; border-radius: 50%; display: inline-block; }
-.refreshed { color: #2F7C2F; font-weight: 600; }
+.dot { width: 6px; height: 6px; background: #6E7C92; border-radius: 50%; display: inline-block; }
+.refreshed { color: #1F3864; font-weight: 600; }
 .meta-pill {
   background: #F0F4F9;
   color: #1F3864;
@@ -51,8 +45,8 @@ h1 {
   font-size: 12px;
   font-weight: 500;
 }
+.meta-pill.snapshot { background: #FFF4E5; color: #8B5A00; border: 1px solid #F0D8AB; }
 
-/* Section */
 section { margin-bottom: 28px; }
 h2 {
   font-size: 16px;
@@ -73,7 +67,6 @@ h2 {
   border-radius: 999px;
 }
 
-/* Calendar */
 .calendar {
   margin-bottom: 26px;
   background: #F7F9FC;
@@ -87,15 +80,8 @@ h2 {
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.cal-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1F3864;
-}
-.cal-nav {
-  display: flex;
-  gap: 6px;
-}
+.cal-title { font-size: 14px; font-weight: 600; color: #1F3864; }
+.cal-nav { display: flex; gap: 6px; }
 .cal-nav button {
   background: white;
   border: 1px solid #C9D2E0;
@@ -139,6 +125,7 @@ h2 {
 .cal-cell.archived:hover { background: #1F3864; color: white; }
 .cal-cell.today { background: #1F3864; color: white; font-weight: 700; border: 2px solid #1F3864; }
 .cal-cell.today:hover { background: #2A4A7F; }
+.cal-cell.viewing { background: #FFB627; color: #4A2E00; font-weight: 700; border: 2px solid #C28100; }
 .cal-cell.blank { visibility: hidden; }
 .cal-legend {
   margin-top: 10px;
@@ -150,11 +137,10 @@ h2 {
 }
 .cal-legend span { display: inline-flex; align-items: center; gap: 5px; }
 .cal-legend .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
-.cal-legend .swatch.today { background: #1F3864; }
+.cal-legend .swatch.viewing { background: #FFB627; border: 1px solid #C28100; }
 .cal-legend .swatch.archived { background: #E8EFF8; border: 1px solid #C9D6EA; }
 .cal-legend .swatch.empty { background: transparent; border: 1px solid #BFC8D5; }
 
-/* Story cards */
 .story {
   display: grid;
   grid-template-columns: 36px 1fr;
@@ -189,7 +175,6 @@ h2 {
 .why { font-size: 13px; color: #444; }
 .why-label { font-weight: 600; color: #1F3864; }
 
-/* Outlet coverage chip grid */
 .chip-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -212,7 +197,6 @@ h2 {
 .chip.covered { border-color: #2F7C2F; background: #F0F8F0; }
 .chip.covered .chip-status { color: #2F7C2F; }
 
-/* Footer */
 footer {
   margin-top: 30px;
   padding-top: 16px;
@@ -220,26 +204,8 @@ footer {
   font-size: 12px;
   color: #595959;
 }
-
-.actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-.btn {
-  background: #1F3864;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-  font-family: inherit;
-}
-.btn:hover { background: #2A4A7F; }
-.btn.secondary { background: white; color: #1F3864; border: 1px solid #1F3864; }
-.btn.secondary:hover { background: #F0F4F9; }
+.dash-link { display: inline-block; margin-top: 10px; color: #1F3864; font-weight: 600; text-decoration: none; }
+.dash-link:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -247,13 +213,15 @@ footer {
   <header>
     <h1>AJP Portfolio — Daily News</h1>
     <div class="sub">
+      <span class="meta-pill snapshot">Archived snapshot</span>
       <span class="meta-pill">Top 10 most consequential</span>
       <span class="meta-pill">39 outlets monitored</span>
-      <span><span class="dot"></span> <span class="refreshed">Last updated: April 27, 2026 at 11:15 PM ET</span></span>
+      <span><span class="dot"></span> <span class="refreshed">Snapshot from April 27, 2026</span></span>
     </div>
     <div class="sub" style="margin-top:6px;font-size:12px;font-style:italic;">
-      Daily auto-refresh complete. 12 of 39 outlets contributed reporting published today.
+      This page captures the dashboard as it stood at end of day on April 27, 2026 (ET). Story links go to the original outlet.
     </div>
+    <a class="dash-link" href="https://baybarso.github.io/ajp-news-dashboard/">&larr; Back to live dashboard</a>
   </header>
 
   <section class="calendar-section">
@@ -262,13 +230,13 @@ footer {
         <div class="cal-title" id="cal-title">April 2026</div>
         <div class="cal-nav">
           <button id="cal-prev" type="button" aria-label="Previous month">&larr; Prev</button>
-          <button id="cal-today" type="button" aria-label="Jump to today">Today</button>
+          <button id="cal-today" type="button" aria-label="Jump to viewed day">Viewed</button>
           <button id="cal-next" type="button" aria-label="Next month">Next &rarr;</button>
         </div>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-legend">
-        <span><span class="swatch today"></span> Today</span>
+        <span><span class="swatch viewing"></span> Currently viewing</span>
         <span><span class="swatch archived"></span> Archived day</span>
         <span><span class="swatch empty"></span> No snapshot</span>
       </div>
@@ -276,7 +244,7 @@ footer {
   </section>
 
   <section>
-    <h2>Today's Top 10 <span class="count-pill">most consequential</span></h2>
+    <h2>Top 10 — April 27, 2026 <span class="count-pill">most consequential</span></h2>
 
     <div class="story top3">
       <div class="rank">1</div>
@@ -370,17 +338,13 @@ footer {
   </section>
 
   <section>
-    <h2>Outlets covered today <span class="count-pill" id="coverage-count">12 of 39 covered</span></h2>
+    <h2>Outlets covered on April 27, 2026 <span class="count-pill" id="coverage-count">12 of 39 covered</span></h2>
     <div class="chip-grid" id="outlet-grid"></div>
   </section>
 
   <footer>
-    <div><strong>How this works.</strong> A scheduled Claude task runs every weekday. It searches each of the 39 AJP grantee newsrooms via web search for stories published the same day (ET), and applies an editorial rubric (investigative depth, public-interest weight, cross-regional resonance; deprioritize celebrity/sports/weather) to pick the top 10 with a one-line "why this matters" each.</div>
-    <div style="margin-top:8px;"><strong>Today's run.</strong> 12 of 39 outlets returned at least one story published April 27 (ET). The remaining 27 were searched but had no fresh same-day reporting indexed at run time — common late on weekday evenings. Use the calendar above to revisit any prior day's snapshot.</div>
-    <div class="actions">
-      <button class="btn" onclick="window.print()">Print / Save as PDF</button>
-      <button class="btn secondary" onclick="document.querySelectorAll('.story .title a').forEach(a => window.open(a.href, '_blank'))">Open all 10 in tabs</button>
-    </div>
+    <div><strong>About this snapshot.</strong> Captured at the end of April 27, 2026 (ET) by an automated daily run of the AJP news-triage task. Story rankings reflect editorial judgment at the time of capture and are not updated retroactively.</div>
+    <a class="dash-link" href="https://baybarso.github.io/ajp-news-dashboard/">&larr; Back to live dashboard</a>
   </footer>
 </div>
 
@@ -433,20 +397,20 @@ const grid = document.getElementById('outlet-grid');
 outlets.forEach(o => {
   const c = document.createElement('div');
   c.className = 'chip' + (o.covered ? ' covered' : '');
-  c.innerHTML = `<a href="${o.url}" target="_blank" class="chip-name">${o.name}</a><span class="chip-status">${o.covered ? '✓ today' : 'tomorrow'}</span>`;
+  c.innerHTML = `<a href="${o.url}" target="_blank" class="chip-name">${o.name}</a><span class="chip-status">${o.covered ? '✓' : '—'}</span>`;
   grid.appendChild(c);
 });
 const coveredCount = outlets.filter(o => o.covered).length;
 document.getElementById('coverage-count').textContent = `${coveredCount} of ${outlets.length} covered`;
 
-// Calendar
+// Calendar — for archive snapshot, the viewed day is highlighted as "viewing"
 (function(){
   const archiveDates = JSON.parse(document.getElementById('archive-index').textContent);
   const archiveSet = new Set(archiveDates);
-  const today = new Date('2026-04-27T12:00:00-04:00');
-  const todayStr = '2026-04-27';
-  let viewYear = today.getFullYear();
-  let viewMonth = today.getMonth();
+  const viewedStr = '2026-04-27';
+  const viewedDate = new Date('2026-04-27T12:00:00-04:00');
+  let viewYear = viewedDate.getFullYear();
+  let viewMonth = viewedDate.getMonth();
   const archiveBase = 'https://baybarso.github.io/ajp-news-dashboard/archive/';
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const dowNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -478,19 +442,16 @@ document.getElementById('coverage-count').textContent = `${coveredCount} of ${ou
       const cellDate = new Date(viewYear, viewMonth, d);
       let cls = 'cal-cell ';
       let elem;
-      if (dateStr === todayStr){
-        cls += 'today';
-        elem = document.createElement('a');
-        elem.href = archiveBase + dateStr + '.html';
-        elem.target = '_blank';
-        elem.rel = 'noopener';
+      if (dateStr === viewedStr){
+        cls += 'viewing';
+        elem = document.createElement('div');
       } else if (archiveSet.has(dateStr)){
         cls += 'archived';
         elem = document.createElement('a');
         elem.href = archiveBase + dateStr + '.html';
         elem.target = '_blank';
         elem.rel = 'noopener';
-      } else if (cellDate > today){
+      } else if (cellDate > viewedDate){
         cls += 'future';
         elem = document.createElement('div');
       } else {
@@ -514,8 +475,8 @@ document.getElementById('coverage-count').textContent = `${coveredCount} of ${ou
     render();
   });
   document.getElementById('cal-today').addEventListener('click', function(){
-    viewYear = today.getFullYear();
-    viewMonth = today.getMonth();
+    viewYear = viewedDate.getFullYear();
+    viewMonth = viewedDate.getMonth();
     render();
   });
 
