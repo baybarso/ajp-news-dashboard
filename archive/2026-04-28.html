@@ -1,15 +1,9 @@
-<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Ajp News Dashboard",
-  "schemaVersion": 1,
-  "description": "Daily 8:30 AM ET dashboard pulling the most consequential stories from the 39 AJP grantee newsrooms. Updates automatically each weekday morning via a scheduled task. Searchable archive across all prior days; calendar at the bottom navigates to per-day snapshots."
-}
-</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AJP Portfolio — Daily News Dashboard</title>
+<title>AJP Portfolio — Daily News — Snapshot 2026-04-28</title>
 <style>
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
@@ -356,8 +350,8 @@ footer {
     <div class="sub">
       <span class="meta-pill">Top 10 most consequential</span>
       <span class="meta-pill">39 outlets monitored</span>
-      
-      <span><span class="dot"></span> <span class="refreshed">Last updated: April 28, 2026 at 8:38 AM ET</span></span>
+      <span class="meta-pill snapshot">Snapshot view</span>
+      <span><span class="dot"></span> <span class="snapshot-stamp">Snapshot from 2026-04-28</span></span>
     </div>
     <div class="window-line">
       Window: stories published in the last 24 hours — Mon Apr 27 ~8:30 AM through Tue Apr 28 ~8:30 AM ET.
@@ -662,7 +656,7 @@ document.getElementById('coverage-count').textContent = `${coveredCount} of ${ou
 
   // Anchor "today" to a fixed ET date so the calendar renders consistently
   const TODAY_ET = "2026-04-28";
-  const VIEWING_DATE = null;
+  const VIEWING_DATE = "2026-04-28";
 
   const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const dows = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
