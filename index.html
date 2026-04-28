@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Ajp News Dashboard",
+  "schemaVersion": 1,
+  "description": "Daily noon-ET dashboard pulling the most consequential stories from the 39 AJP grantee newsrooms. Updates automatically each day at 12:00 ET via a scheduled task."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJP Portfolio — Daily News Dashboard</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 14px;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 24px 28px 40px; }
+header {
+  border-bottom: 2px solid #1F3864;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+h1 {
+  font-size: 26px;
+  margin: 0 0 4px;
+  color: #1F3864;
+  letter-spacing: -0.01em;
+}
+.sub {
+  font-size: 13px;
+  color: #595959;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.dot { width: 6px; height: 6px; background: #2F7C2F; border-radius: 50%; display: inline-block; }
+.refreshed { color: #2F7C2F; font-weight: 600; }
+.meta-pill {
+  background: #F0F4F9;
+  color: #1F3864;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Section */
+section { margin-bottom: 28px; }
+h2 {
+  font-size: 16px;
+  color: #1F3864;
+  margin: 0 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #E0E6EE;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.count-pill {
+  font-size: 12px;
+  font-weight: 500;
+  color: #595959;
+  background: #F0F4F9;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* Story cards */
+.story {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #EDEFF2;
+}
+.story:last-child { border-bottom: none; }
+.rank {
+  font-weight: 700;
+  color: #1F3864;
+  font-size: 18px;
+  text-align: center;
+  background: #F0F4F9;
+  border-radius: 6px;
+  padding: 4px 0;
+  height: 32px;
+  align-self: start;
+}
+.story.top3 .rank { background: #1F3864; color: white; }
+.outlet {
+  font-size: 11px;
+  font-weight: 600;
+  color: #1F3864;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.title { font-size: 15px; font-weight: 600; line-height: 1.35; margin-bottom: 4px; }
+.title a { color: #1a1a1a; text-decoration: none; }
+.title a:hover { color: #1F3864; text-decoration: underline; }
+.why { font-size: 13px; color: #444; }
+.why-label { font-weight: 600; color: #1F3864; }
+
+/* Outlet coverage chip grid */
+.chip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 6px;
+}
+.chip {
+  background: #F7F9FC;
+  border: 1px solid #E0E6EE;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chip a { color: #1a1a1a; text-decoration: none; }
+.chip a:hover { color: #1F3864; }
+.chip-name { font-weight: 600; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip-status { font-size: 10px; color: #595959; flex-shrink: 0; }
+.chip.covered { border-color: #2F7C2F; background: #F0F8F0; }
+.chip.covered .chip-status { color: #2F7C2F; }
+
+/* Footer */
+footer {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid #E0E6EE;
+  font-size: 12px;
+  color: #595959;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.btn {
+  background: #1F3864;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover { background: #2A4A7F; }
+.btn.secondary { background: white; color: #1F3864; border: 1px solid #1F3864; }
+.btn.secondary:hover { background: #F0F4F9; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>AJP Portfolio — Daily News</h1>
+    <div class="sub">
+      <span class="meta-pill">Top 10 most consequential</span>
+      <span class="meta-pill">39 outlets monitored</span>
+      <span><span class="dot"></span> <span class="refreshed">Last updated: April 27, 2026 at 12:00 PM ET</span></span>
+    </div>
+    <div class="sub" style="margin-top:6px;font-size:12px;font-style:italic;">
+      Daily auto-refresh complete. 36 of 39 outlets contributed usable reporting today.
+    </div>
+  </header>
+
+  <section>
+    <h2>Today's Top 10 <span class="count-pill">most consequential</span></h2>
+
+    <div class="story top3">
+      <div class="rank">1</div>
+      <div>
+        <div class="outlet">The Texas Tribune</div>
+        <div class="title"><a href="https://www.texastribune.org/2026/04/27/texas-redistricting-map-ruling-us-supreme-court-upheld-2026-midterms/" target="_blank">Texas' new congressional map can be used, Supreme Court rules</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> SCOTUS today formally overturned the lower-court block, clearing the redrawn map for the 2026 midterms — a map designed to add up to five GOP House seats. National implications for control of the House and a template other states will study.</div>
+      </div>
+    </div>
+
+    <div class="story top3">
+      <div class="rank">2</div>
+      <div>
+        <div class="outlet">The Marshall Project</div>
+        <div class="title"><a href="https://www.themarshallproject.org/2026/04/03/when-accountability-falls-short" target="_blank">When Accountability Falls Short — Mississippi's prison-deaths oversight bill dies</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> Collaborative reporting documents nearly 50 prison killings 2015–2025 while a House oversight task-force bill failed in the Mississippi legislature. Foundational accountability story with replication risk in other states with weak in-custody-death reporting.</div>
+      </div>
+    </div>
+
+    <div class="story top3">
+      <div class="rank">3</div>
+      <div>
+        <div class="outlet">El Paso Matters</div>
+        <div class="title"><a href="https://elpasomatters.org/2026/04/02/ice-el-paso-texas-camp-east-montana-inspection-finds-violations-detention-standards/" target="_blank">Inspection finds 49 detention-standard violations at El Paso's Camp East Montana ICE facility</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> ICE's own Office of Detention Oversight documented dozens of deficiencies in use-of-force, security and medical care at a 1,000+-bed facility now central to the administration's deportation buildup. Goes directly to detention-conditions accountability across the portfolio.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">4</div>
+      <div>
+        <div class="outlet">inewsource (San Diego)</div>
+        <div class="title"><a href="https://inewsource.org/2026/04/21/ice-border-immigration-gun-range-san-diego-trump/" target="_blank">ICE and border agents have quietly used the San Diego sheriff's gun range for years</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> Original investigation: since January, DHS agents have logged hundreds of training hours and thousands in rental payments at a county-run firearms facility — entangling local sheriffs in federal immigration enforcement at a moment of legal-sanctuary disputes.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">5</div>
+      <div>
+        <div class="outlet">Centro de Periodismo Investigativo</div>
+        <div class="title"><a href="https://periodismoinvestigativo.com/2026/04/cpi-sues-police-missing-persons/" target="_blank">CPI sues Puerto Rico Police Bureau for failing to release missing-persons data</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> 1,000+ Puerto Ricans are reported missing each year, and CPI alleges the police don't even maintain a usable list. A public-records mandamus that tests transparency law on the island and is a template other state-level investigative outlets can learn from.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">6</div>
+      <div>
+        <div class="outlet">Block Club Chicago</div>
+        <div class="title"><a href="https://blockclubchicago.org/2026/04/05/state-accountability-commission-seeks-testimony-from-leaders-of-operation-midway-blitz/" target="_blank">Illinois accountability panel seeks testimony from Stephen Miller, Kristi Noem on Operation Midway Blitz</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> A state body is formally summoning top White House and DHS figures over alleged civil-liberties violations during a major Chicago immigration sweep. Sets a federalism precedent other states will copy as ICE operations expand.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">7</div>
+      <div>
+        <div class="outlet">Wisconsin Watch</div>
+        <div class="title"><a href="https://wisconsinwatch.org/2026/04/port-washington-data-center-project-voters-referendum-tif-district-wisconsin/" target="_blank">Did Port Washington voters stop a $458 million data center? A referendum reshapes future TIF deals</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> Direct-democracy pushback on hyperscale data centers — water, power, secrecy NDAs — a pattern playing out in Salt Lake, Charlotte, San José and across the AJP map. The Port Washington vote is a working playbook for residents elsewhere.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">8</div>
+      <div>
+        <div class="outlet">Grist</div>
+        <div class="title"><a href="https://www.washingtonpost.com/business/2026/04/17/climate-solar-energy-farmers-takeaways/62b66e9c-3a5e-11f1-90c4-9772c7fabc03_story.html" target="_blank">AP-Grist investigation: 126 farmland solar projects stalled as REAP rural-energy funds dry up</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> Grist-AP data analysis finds ~20 GW of farmland solar awaiting approval while USDA has issued zero rural-energy dollars this fiscal year. Direct hit on red-state farmers — a story that lands in Wyoming, Montana, Texas, Wisconsin and Indiana simultaneously.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">9</div>
+      <div>
+        <div class="outlet">Spotlight PA</div>
+        <div class="title"><a href="https://www.spotlightpa.org/news/2026/04/pennsylvania-governor-mansion-attack-securiy-oversight-josh-shapiro/" target="_blank">PA treasurer denies $1M Shapiro home-security upgrades; lawmakers demand more oversight</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> A standoff between the Shapiro administration, the legislature and the state treasurer over post-attack mansion-security spending — secrecy, statutory authority, ethics-act compliance all in play. A test case in executive-branch accountability ahead of 2026.</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="rank">10</div>
+      <div>
+        <div class="outlet">CT Mirror</div>
+        <div class="title"><a href="https://ctmirror.org/2026/04/26/doug-mccrory-blue-hills-civic-association/" target="_blank">FBI-probed CT senator steered taxpayer funds to a former campaign treasurer's firm, documents show</a></div>
+        <div class="why"><span class="why-label">Why this matters:</span> CT Mirror obtained records detailing how Sen. Doug McCrory directed money from the Blue Hills Civic Association to a consulting firm owned by his ex-campaign treasurer at ~$11K/month. A textbook nonprofit-capture investigation now feeding an active FBI case.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Outlets covered today <span class="count-pill" id="coverage-count">36 of 39 covered</span></h2>
+    <div class="chip-grid" id="outlet-grid"></div>
+  </section>
+
+  <footer>
+    <div><strong>How this works.</strong> A scheduled Claude task runs every day at 12:00 PM ET. It searches each of the 39 AJP grantee newsrooms via web search, compiles ~150 fresh headlines, and applies an editorial rubric (investigative depth, public-interest weight, cross-regional resonance; deprioritize celebrity / sports / weather) to pick the top 10 with a one-line "why this matters" each.</div>
+    <div style="margin-top:8px;"><strong>Today's run.</strong> 36 of 39 outlets returned at least one usable item. Three outlets (Deep South Today, Free Press Indiana, Tulsa Local News Initiative) had no fresh April reporting indexed at search time and are flagged for tomorrow.</div>
+    <div class="actions">
+      <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+      <button class="btn secondary" onclick="document.querySelectorAll('.story .title a').forEach(a => window.open(a.href, '_blank'))">Open all 10 in tabs</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+const outlets = [
+  {name: "The Beacon (KC/MO)", url: "https://thebeaconnews.org/", covered: true},
+  {name: "Block Club Chicago", url: "https://blockclubchicago.org/", covered: true},
+  {name: "Capital B News", url: "https://capitalbnews.org/", covered: true},
+  {name: "Centro de Periodismo Investigativo", url: "https://periodismoinvestigativo.com/", covered: true},
+  {name: "Charlottesville Tomorrow", url: "https://www.cvilletomorrow.org/", covered: true},
+  {name: "THE CITY (NYC)", url: "https://www.thecity.nyc/", covered: true},
+  {name: "City Bureau", url: "https://www.citybureau.org/", covered: true},
+  {name: "Civic News Company", url: "https://civicnews.org/", covered: true},
+  {name: "The Colorado Sun", url: "https://coloradosun.com/", covered: true},
+  {name: "CT Mirror", url: "https://ctmirror.org/", covered: true},
+  {name: "Deep South Today", url: "https://deepsouthtoday.org/", covered: false},
+  {name: "Documented (NY)", url: "https://documentedny.com/", covered: true},
+  {name: "El Paso Matters", url: "https://elpasomatters.org/", covered: true},
+  {name: "Free Press Indiana", url: "https://www.freepressindiana.org/", covered: false},
+  {name: "Grist", url: "https://grist.org/", covered: true},
+  {name: "Houston Landing", url: "https://houstonlanding.org/", covered: true},
+  {name: "ICT News", url: "https://ictnews.org/", covered: true},
+  {name: "inewsource (San Diego)", url: "https://inewsource.org/", covered: true},
+  {name: "Louisville Public Media", url: "https://www.lpm.org/", covered: true},
+  {name: "The Marshall Project", url: "https://www.themarshallproject.org/", covered: true},
+  {name: "Montana Free Press", url: "https://montanafreepress.org/", covered: true},
+  {name: "Mountain State Spotlight", url: "https://mountainstatespotlight.org/", covered: true},
+  {name: "The Nevada Independent", url: "https://thenevadaindependent.com/", covered: true},
+  {name: "New York Focus", url: "https://nysfocus.com/", covered: true},
+  {name: "Open Campus", url: "https://www.opencampus.org/", covered: true},
+  {name: "Outlier Media (Detroit)", url: "https://outliermedia.org/", covered: true},
+  {name: "Sahan Journal (MN)", url: "https://sahanjournal.com/", covered: true},
+  {name: "The Salt Lake Tribune", url: "https://www.sltrib.com/", covered: true},
+  {name: "San José Spotlight", url: "https://sanjosespotlight.com/", covered: true},
+  {name: "Signal Ohio", url: "https://signalohio.org/", covered: true},
+  {name: "Spotlight PA", url: "https://www.spotlightpa.org/", covered: true},
+  {name: "The Texas Tribune", url: "https://www.texastribune.org/", covered: true},
+  {name: "Tulsa Local News Initiative", url: "https://www.localnewsfortulsa.org/", covered: false},
+  {name: "VTDigger", url: "https://vtdigger.org/", covered: true},
+  {name: "WFAE (Charlotte)", url: "https://www.wfae.org/", covered: true},
+  {name: "Wisconsin Watch", url: "https://wisconsinwatch.org/", covered: true},
+  {name: "WyoFile", url: "https://wyofile.com/", covered: true},
+  {name: "The LA Local", url: "https://thelalocal.org/", covered: true},
+  {name: "Nashville Banner", url: "https://nashvillebanner.com/", covered: true},
+];
+outlets.sort((a, b) => (b.covered - a.covered) || a.name.localeCompare(b.name));
+const grid = document.getElementById('outlet-grid');
+outlets.forEach(o => {
+  const c = document.createElement('div');
+  c.className = 'chip' + (o.covered ? ' covered' : '');
+  c.innerHTML = `<a href="${o.url}" target="_blank" class="chip-name">${o.name}</a><span class="chip-status">${o.covered ? '✓ today' : 'tomorrow'}</span>`;
+  grid.appendChild(c);
+});
+const coveredCount = outlets.filter(o => o.covered).length;
+document.getElementById('coverage-count').textContent = `${coveredCount} of ${outlets.length} covered`;
+</script>
+</body>
+</html>
