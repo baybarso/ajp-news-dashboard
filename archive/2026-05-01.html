@@ -1,15 +1,9 @@
-<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Ajp News Dashboard",
-  "schemaVersion": 1,
-  "description": "Daily 8:30 AM ET dashboard pulling the most consequential stories from the 39 AJP grantee newsrooms. Updates automatically each weekday at 8:30 AM ET via a scheduled task."
-}
-</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AJP Portfolio &mdash; Daily News Dashboard</title>
+<title>AJP Daily News &mdash; Snapshot 2026-05-01</title>
 <style>
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
@@ -354,10 +348,11 @@ footer {
   <header>
     <h1>AJP Portfolio &mdash; Daily News</h1>
     <div class="sub">
+      <span class="meta-pill snapshot">Archive snapshot</span>
       <span class="meta-pill">Top 10 most consequential</span>
       <span class="meta-pill">39 outlets monitored</span>
 
-      <span><span class="dot"></span> <span class="refreshed">Last updated: May 1, 2026 at 8:30 AM ET</span></span>
+      <span><span class="snapshot-stamp">Snapshot from May 1, 2026 at 8:30 AM ET</span></span>
     </div>
     <div class="window-line">
       Window: stories published in the last 24 hours — Thu Apr 30 ~8:30 AM through Fri May 1 ~8:30 AM ET.
@@ -621,7 +616,7 @@ document.getElementById('coverage-count').textContent = `${coveredCount} of ${ou
   const ARCHIVE_BASE = "https://baybarso.github.io/ajp-news-dashboard/archive/";
 
   const TODAY_ET = "2026-05-01";
-  const VIEWING_DATE = null;
+  const VIEWING_DATE = "2026-05-01";
 
   const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const dows = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
