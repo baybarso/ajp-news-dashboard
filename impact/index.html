@@ -241,6 +241,12 @@ footer {
 
   <div class="controls">
     <input type="text" id="search-input" placeholder="Filter by outlet name&hellip;" autocomplete="off">
+    <select id="year-filter">
+      <option value="all" selected>Year: All</option>
+      <option value="2026">Year: 2026</option>
+      <option value="2025">Year: 2025</option>
+      <option value="2024">Year: 2024</option>
+    </select>
     <select id="sort-select">
       <option value="recent" selected>Sort: Latest report year</option>
       <option value="name">Sort: Outlet name (A&ndash;Z)</option>
@@ -393,9 +399,16 @@ footer {
   function render() {
     var mode = document.getElementById('sort-select').value;
     var q = document.getElementById('search-input').value.trim().toLowerCase();
+    var yearFilter = document.getElementById('year-filter').value;
     var arr = sortData(mode);
     if (q) {
       arr = arr.filter(function (o) { return o.outlet.toLowerCase().indexOf(q) !== -1; });
+    }
+    if (yearFilter !== 'all') {
+      var yr = parseInt(yearFilter, 10);
+      arr = arr.filter(function (o) {
+        return (o.reports || []).some(function (r) { return r.year === yr; });
+      });
     }
     var container = document.getElementById('outlets');
     var emptyEl = document.getElementById('empty-search');
@@ -410,6 +423,7 @@ footer {
 
   document.getElementById('search-input').addEventListener('input', render);
   document.getElementById('sort-select').addEventListener('change', render);
+  document.getElementById('year-filter').addEventListener('change', render);
   render();
 })();
 </script>
