@@ -6,8 +6,7 @@
     "reports": [],
     "impactPage": {
       "title": "Our Impact",
-      "url": "https://thebeaconnews.org/impact/",
-      "new": true
+      "url": "https://thebeaconnews.org/impact/"
     },
     "status": "found"
   },
@@ -66,8 +65,7 @@
     "reports": [],
     "impactPage": {
       "title": "Transparencia",
-      "url": "https://periodismoinvestigativo.com/transparencia/",
-      "new": true
+      "url": "https://periodismoinvestigativo.com/transparencia/"
     },
     "status": "found"
   },
@@ -125,8 +123,7 @@
     "reports": [],
     "impactPage": {
       "title": "About Us & History",
-      "url": "https://civicnews.org/about-us-history/",
-      "new": true
+      "url": "https://civicnews.org/about-us-history/"
     },
     "status": "found"
   },
@@ -181,21 +178,18 @@
         "title": "Verite News — How Our Reporting Made an Impact in 2025",
         "url": "https://veritenews.org/2025/12/30/new-orleans-news-impact-2025-jimmie-duncan-hurricane-katrina/",
         "year": 2025,
-        "format": "html",
-        "new": true
+        "format": "html"
       },
       {
         "title": "Mississippi Today — 2022 Impact Report",
         "url": "https://mississippitoday.org/2022-impact-report/",
         "year": 2022,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
       "title": "Who Funds Us (Transparency)",
-      "url": "https://deepsouthtoday.org/who-funds-us/",
-      "new": true
+      "url": "https://deepsouthtoday.org/who-funds-us/"
     },
     "status": "found"
   },
@@ -203,9 +197,24 @@
     "outlet": "Documented",
     "outletSlug": "documented",
     "homepage": "https://documentedny.com/",
-    "reports": [],
+    "reports": [
+      {
+        "title": "Documented Releases 2023 Annual Report",
+        "url": "https://documentedny.com/2024/05/07/2023-annual-report/",
+        "year": 2023,
+        "format": "html",
+        "new": true
+      },
+      {
+        "title": "Documented Annual Report 2021",
+        "url": "https://documentedny.com/wp-content/uploads/2022/03/Documented-2021-Annual-Report.pdf",
+        "year": 2021,
+        "format": "pdf",
+        "new": true
+      }
+    ],
     "impactPage": null,
-    "status": "no_reports_found"
+    "status": "found"
   },
   {
     "outlet": "El Paso Matters",
@@ -222,15 +231,13 @@
         "title": "2023 Impact Report",
         "url": "https://elpasomatters.org/2023impactreport/",
         "year": 2023,
-        "format": "html",
-        "new": true
+        "format": "html"
       },
       {
         "title": "2022 Impact Report",
         "url": "https://elpasomatters.org/wp-content/uploads/2023/04/2022-Impact-Report.pdf",
         "year": 2022,
-        "format": "pdf",
-        "new": true
+        "format": "pdf"
       }
     ],
     "impactPage": null,
@@ -243,8 +250,7 @@
     "reports": [],
     "impactPage": {
       "title": "About (Mission & Progress)",
-      "url": "https://www.freepressindiana.org/about",
-      "new": true
+      "url": "https://www.freepressindiana.org/about"
     },
     "status": "found"
   },
@@ -257,8 +263,7 @@
         "title": "Grist Annual Report 2016",
         "url": "https://grist.org/wp-content/uploads/2016/09/grist-annual-report-20161.pdf",
         "year": 2016,
-        "format": "pdf",
-        "new": true
+        "format": "pdf"
       }
     ],
     "impactPage": null,
@@ -284,14 +289,12 @@
         "title": "The Power of Indigenous Journalism: ICT's 2024 Impact Report",
         "url": "https://ictnews.org/the-press-pool/the-power-of-indigenous-journalism-icts-2024-impact-report/",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
       "title": "About Us (Transparency)",
-      "url": "https://ictnews.org/about-us/",
-      "new": true
+      "url": "https://ictnews.org/about-us/"
     },
     "status": "found"
   },
@@ -304,8 +307,7 @@
         "title": "2023 Annual Impact Report",
         "url": "https://inewsource.org/wp-content/uploads/2023/12/inewsource2023AnnualImpactReport.pdf",
         "year": 2023,
-        "format": "pdf",
-        "new": true
+        "format": "pdf"
       },
       {
         "title": "First Annual Impact Report (2022)",
@@ -316,8 +318,7 @@
     ],
     "impactPage": {
       "title": "Standards and Financials",
-      "url": "https://inewsource.org/standards-and-financials/",
-      "new": true
+      "url": "https://inewsource.org/standards-and-financials/"
     },
     "status": "found"
   },
@@ -400,15 +401,13 @@
         "title": "An Update on The Indy (CEO letter, July 2024)",
         "url": "https://thenevadaindependent.com/article/an-update-on-the-indy",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       },
       {
         "title": "Change and Hope (CEO letter, Feb 2024)",
         "url": "https://thenevadaindependent.com/article/change-and-hope",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": null,
@@ -434,14 +433,12 @@
         "title": "Open Campus Reporters Told More Than 500 Stories in 2024 — Here's Why They Matter",
         "url": "https://www.opencampus.org/2024/12/18/open-campus-reporters-told-more-than-500-stories-in-2024-heres-why-they-matter/",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
       "title": "About Open Campus",
-      "url": "https://www.opencampus.org/about-open-campus/",
-      "new": true
+      "url": "https://www.opencampus.org/about-open-campus/"
     },
     "status": "found"
   },
@@ -454,8 +451,7 @@
         "title": "2024 in Review: Outlier Media's Top Stories of the Year",
         "url": "https://outliermedia.org/detroit-year-in-review-2024/",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
@@ -512,14 +508,12 @@
         "title": "2024 in Review: San Jose City Council's Top Decisions",
         "url": "https://sanjosespotlight.com/2024-in-review-san-jose-city-councils-top-decisions/",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
       "title": "About Us (Transparency)",
-      "url": "https://sanjosespotlight.com/about-us/",
-      "new": true
+      "url": "https://sanjosespotlight.com/about-us/"
     },
     "status": "found"
   },
@@ -532,14 +526,12 @@
         "title": "525,600 Minutes of News: The Signal Stories That Defined 2025",
         "url": "https://signalohio.org/525600-minutes-of-news-the-signal-stories-that-defined-2025/",
         "year": 2025,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
       "title": "Governance & Transparency",
-      "url": "https://signalohio.org/governance-transparency/",
-      "new": true
+      "url": "https://signalohio.org/governance-transparency/"
     },
     "status": "found"
   },
@@ -585,8 +577,7 @@
     "reports": [],
     "impactPage": {
       "title": "About Tulsa Local News Initiative",
-      "url": "https://www.localnewsfortulsa.org/about-us",
-      "new": true
+      "url": "https://www.localnewsfortulsa.org/about-us"
     },
     "status": "found"
   },
@@ -618,8 +609,7 @@
     "reports": [],
     "impactPage": {
       "title": "Annual Reports & Public Information",
-      "url": "https://www.wfae.org/public-information",
-      "new": true
+      "url": "https://www.wfae.org/public-information"
     },
     "status": "found"
   },
@@ -668,14 +658,12 @@
         "title": "Welcome to The LA Local: We Built This Newsroom for You (Launch Manifesto)",
         "url": "https://thelalocal.org/news/welcome-to-the-la-local-we-built-this-newsroom-for-you/",
         "year": 2025,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": {
       "title": "About The LA Local",
-      "url": "https://thelalocal.org/about/",
-      "new": true
+      "url": "https://thelalocal.org/about/"
     },
     "status": "found"
   },
@@ -694,8 +682,7 @@
         "title": "Best of the Banner 2024 (Year-in-Review)",
         "url": "https://nashvillebanner.com/newsletter/best-of-the-banner-2024/",
         "year": 2024,
-        "format": "html",
-        "new": true
+        "format": "html"
       }
     ],
     "impactPage": null,
