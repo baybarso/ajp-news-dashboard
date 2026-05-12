@@ -20,12 +20,6 @@
         "url": "https://blockclubchicago.org/2025-annual-report/",
         "year": 2025,
         "format": "html"
-      },
-      {
-        "title": "2023 Annual Report",
-        "url": "https://blockclubchicago.org/2023-annual-report/",
-        "year": 2023,
-        "format": "html"
       }
     ],
     "impactPage": null,
@@ -47,12 +41,6 @@
         "url": "https://capitalbnews.org/capitalb-2025-2028-strategic-plan/",
         "year": 2025,
         "format": "html"
-      },
-      {
-        "title": "Most Important Stories for Black America in 2022 (Year-in-Review)",
-        "url": "https://capitalbnews.org/capitalb-best-news-2022/",
-        "year": 2022,
-        "format": "html"
       }
     ],
     "impactPage": null,
@@ -73,16 +61,9 @@
     "outlet": "Charlottesville Tomorrow",
     "outletSlug": "charlottesville-tomorrow",
     "homepage": "https://www.cvilletomorrow.org/",
-    "reports": [
-      {
-        "title": "What Charlottesville Tomorrow Achieved and Learned Last Year (2023 Impact Report)",
-        "url": "https://www.cvilletomorrow.org/heres-what-charlottesville-tomorrow-achieved-and-learned-last-year-and-what-were-looking-forward-to-next-year/",
-        "year": 2023,
-        "format": "html"
-      }
-    ],
+    "reports": [],
     "impactPage": null,
-    "status": "found"
+    "status": "no_reports_found"
   },
   {
     "outlet": "THE CITY",
@@ -137,12 +118,6 @@
         "url": "https://coloradosun.com/2025-annual-report/",
         "year": 2025,
         "format": "html"
-      },
-      {
-        "title": "2023 Annual Report",
-        "url": "https://coloradosun.com/colorado-sun-annual-report-2023/",
-        "year": 2023,
-        "format": "html"
       }
     ],
     "impactPage": {
@@ -179,12 +154,6 @@
         "url": "https://veritenews.org/2025/12/30/new-orleans-news-impact-2025-jimmie-duncan-hurricane-katrina/",
         "year": 2025,
         "format": "html"
-      },
-      {
-        "title": "Mississippi Today — 2022 Impact Report",
-        "url": "https://mississippitoday.org/2022-impact-report/",
-        "year": 2022,
-        "format": "html"
       }
     ],
     "impactPage": {
@@ -197,24 +166,9 @@
     "outlet": "Documented",
     "outletSlug": "documented",
     "homepage": "https://documentedny.com/",
-    "reports": [
-      {
-        "title": "Documented Releases 2023 Annual Report",
-        "url": "https://documentedny.com/2024/05/07/2023-annual-report/",
-        "year": 2023,
-        "format": "html",
-        "new": true
-      },
-      {
-        "title": "Documented Annual Report 2021",
-        "url": "https://documentedny.com/wp-content/uploads/2022/03/Documented-2021-Annual-Report.pdf",
-        "year": 2021,
-        "format": "pdf",
-        "new": true
-      }
-    ],
+    "reports": [],
     "impactPage": null,
-    "status": "found"
+    "status": "no_reports_found"
   },
   {
     "outlet": "El Paso Matters",
@@ -226,18 +180,6 @@
         "url": "https://elpasomatters.org/2024-impact-report/",
         "year": 2024,
         "format": "html"
-      },
-      {
-        "title": "2023 Impact Report",
-        "url": "https://elpasomatters.org/2023impactreport/",
-        "year": 2023,
-        "format": "html"
-      },
-      {
-        "title": "2022 Impact Report",
-        "url": "https://elpasomatters.org/wp-content/uploads/2023/04/2022-Impact-Report.pdf",
-        "year": 2022,
-        "format": "pdf"
       }
     ],
     "impactPage": null,
@@ -258,16 +200,9 @@
     "outlet": "Grist",
     "outletSlug": "grist",
     "homepage": "https://grist.org/",
-    "reports": [
-      {
-        "title": "Grist Annual Report 2016",
-        "url": "https://grist.org/wp-content/uploads/2016/09/grist-annual-report-20161.pdf",
-        "year": 2016,
-        "format": "pdf"
-      }
-    ],
+    "reports": [],
     "impactPage": null,
-    "status": "found"
+    "status": "no_reports_found"
   },
   {
     "outlet": "Houston Landing",
@@ -302,20 +237,7 @@
     "outlet": "inewsource",
     "outletSlug": "inewsource",
     "homepage": "https://inewsource.org/",
-    "reports": [
-      {
-        "title": "2023 Annual Impact Report",
-        "url": "https://inewsource.org/wp-content/uploads/2023/12/inewsource2023AnnualImpactReport.pdf",
-        "year": 2023,
-        "format": "pdf"
-      },
-      {
-        "title": "First Annual Impact Report (2022)",
-        "url": "https://inewsource.org/2022/12/12/annual-impact-report-2022/",
-        "year": 2022,
-        "format": "html"
-      }
-    ],
+    "reports": [],
     "impactPage": {
       "title": "Standards and Financials",
       "url": "https://inewsource.org/standards-and-financials/"
@@ -365,12 +287,6 @@
         "title": "MTFP 2024 Growth & Gratitude Report",
         "url": "https://montanafreepress.org/mtfp-2024-growth-gratitude-report/",
         "year": 2024,
-        "format": "html"
-      },
-      {
-        "title": "MTFP 2022 Growth & Gratitude Report",
-        "url": "https://montanafreepress.org/mtfp-2022-growth-gratitude-report/",
-        "year": 2022,
         "format": "html"
       }
     ],
@@ -550,20 +466,7 @@
     "outlet": "The Texas Tribune",
     "outletSlug": "texas-tribune",
     "homepage": "https://www.texastribune.org/",
-    "reports": [
-      {
-        "title": "2022 Annual Report",
-        "url": "https://static.texastribune.org/media/files/a5c56a036a501f1a876f037fb2f5c715/TT-2022-Annual-Report-090123.pdf",
-        "year": 2022,
-        "format": "pdf"
-      },
-      {
-        "title": "2021 Annual Report",
-        "url": "https://static.texastribune.org/media/files/14d6468ed89edb26db46a95949fd04b8/TT-2021-Annual-Report-Web_05-25-2022.pdf",
-        "year": 2021,
-        "format": "pdf"
-      }
-    ],
+    "reports": [],
     "impactPage": {
       "title": "Documents (Annual Reports & Financials)",
       "url": "https://www.texastribune.org/about/documents"
@@ -617,14 +520,7 @@
     "outlet": "Wisconsin Watch",
     "outletSlug": "wisconsin-watch",
     "homepage": "https://wisconsinwatch.org/",
-    "reports": [
-      {
-        "title": "The Impact Our Journalism Made in 2023",
-        "url": "https://wisconsinwatch.org/2023/12/wisconsin-watchs-impact-in-2023/",
-        "year": 2023,
-        "format": "html"
-      }
-    ],
+    "reports": [],
     "impactPage": {
       "title": "Annual Reports",
       "url": "https://wisconsinwatch.org/annual-reports/"
