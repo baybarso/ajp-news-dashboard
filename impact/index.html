@@ -1,469 +1,610 @@
-<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Ajp Impact Reports Dashboard",
-  "schemaVersion": 1,
-  "description": "On-demand impact-reports dashboard for the 39 AJP grantee newsrooms. Aggregates each outlet's formal impact reports (annual / quarterly / year-in-review) and permanent 'Our Impact' landing pages, with NEW badges marking arrivals since the last scan."
-}
-</script>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AJP Portfolio &mdash; Impact Reports</title>
+<title>AJP Portfolio — Impact Reports</title>
 <style>
-:root { color-scheme: light; }
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  background: #ffffff;
-  color: #1a1a1a;
-  line-height: 1.5;
-  font-size: 14px;
-}
-.wrap { max-width: 920px; margin: 0 auto; padding: 24px 28px 40px; }
-header {
-  border-bottom: 2px solid #1F3864;
-  padding-bottom: 14px;
-  margin-bottom: 22px;
-}
-h1 {
-  font-size: 26px;
-  margin: 0 0 4px;
-  color: #1F3864;
-  letter-spacing: -0.01em;
-}
-.subtitle {
-  font-size: 13px;
-  color: #595959;
-  margin: 2px 0 8px;
-}
-.scanned-line {
-  font-size: 12px;
-  color: #595959;
-}
-.scanned-line .stamp {
-  color: #1F3864;
-  font-weight: 600;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 14px 0 6px;
-}
-.chip {
-  background: #F0F4F9;
-  color: #1F3864;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.chip.new {
-  background: #FFF4E5;
-  color: #8B5A00;
-  border: 1px solid #F0D8AB;
-}
-
-.controls {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 18px 0 14px;
-  align-items: center;
-}
-#search-input {
-  flex: 1;
-  min-width: 220px;
-  padding: 9px 12px;
-  border: 1px solid #C9D2DF;
-  border-radius: 8px;
-  font-size: 13px;
-  font-family: inherit;
-  outline: none;
-  background: #fff;
-  color: #1a1a1a;
-}
-#search-input:focus { border-color: #1F3864; }
-#sort-select {
-  padding: 9px 12px;
-  border: 1px solid #C9D2DF;
-  border-radius: 8px;
-  font-size: 13px;
-  font-family: inherit;
-  background: #fff;
-  color: #1a1a1a;
-  cursor: pointer;
-}
-#sort-select:focus { border-color: #1F3864; outline: none; }
-
-#outlets { margin-top: 8px; }
-.outlet-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: 18px;
-  padding: 14px 0;
-  border-bottom: 1px solid #EDEFF2;
-  align-items: start;
-}
-.outlet-row:last-child { border-bottom: none; }
-.outlet-left .outlet-name {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-.outlet-left .outlet-name a {
-  color: #1F3864;
-  text-decoration: none;
-}
-.outlet-left .outlet-name a:hover { text-decoration: underline; }
-.outlet-left .outlet-meta {
-  font-size: 11px;
-  color: #8A8A8A;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.outlet-left .impact-pill {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1F3864;
-  background: #F0F4F9;
-  border: 1px solid #DDE5F0;
-  padding: 3px 10px;
-  border-radius: 999px;
-  text-decoration: none;
-}
-.outlet-left .impact-pill:hover { background: #E3EAF5; }
-
-.outlet-right { min-width: 0; }
-.report-card {
-  border: 1px solid #E0E6EE;
-  border-radius: 8px;
-  padding: 10px 12px;
-  background: #FAFBFD;
-}
-.report-card .report-title {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.35;
-  margin-bottom: 5px;
-}
-.report-card .report-title a {
-  color: #1a1a1a;
-  text-decoration: none;
-}
-.report-card .report-title a:hover { color: #1F3864; text-decoration: underline; }
-.report-card .badges {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.badge {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 4px;
-}
-.badge.year { background: #1F3864; color: #fff; }
-.badge.format-pdf { background: #B3242B; color: #fff; }
-.badge.format-html { background: #2F7C2F; color: #fff; }
-.badge.new { background: #F5A623; color: #fff; }
-
-details.older {
-  margin-top: 8px;
-  font-size: 12px;
-}
-details.older summary {
-  cursor: pointer;
-  color: #1F3864;
-  font-weight: 500;
-  padding: 4px 0;
-  user-select: none;
-}
-details.older ul {
-  margin: 6px 0 0;
-  padding-left: 18px;
-  list-style: disc;
-}
-details.older li { margin: 2px 0; }
-details.older a { color: #1a1a1a; text-decoration: none; }
-details.older a:hover { color: #1F3864; text-decoration: underline; }
-details.older .li-meta { color: #8A8A8A; font-size: 11px; margin-left: 6px; }
-
-.empty-note {
-  font-size: 12px;
-  color: #8A8A8A;
-  font-style: italic;
-}
-
-#empty-search {
-  display: none;
-  text-align: center;
-  padding: 24px;
-  font-size: 13px;
-  color: #8A8A8A;
-  background: #F7F9FC;
-  border-radius: 6px;
-  margin-top: 14px;
-}
-
-footer {
-  margin-top: 28px;
-  padding-top: 14px;
-  border-top: 1px solid #E0E6EE;
-  font-size: 11px;
-  color: #8A8A8A;
-}
-
-@media (max-width: 600px) {
-  .outlet-row { grid-template-columns: 1fr; gap: 10px; }
-  .wrap { padding: 18px 16px 32px; }
-}
-
-.methodology h2 {
-  color: #1F3864;
-  font-size: 15px;
-  margin: 0 0 8px;
-  letter-spacing: -0.005em;
-}
-.methodology p {
-  font-size: 12px;
-  color: #4a4a4a;
-  margin: 6px 0;
-  line-height: 1.55;
-}
-.methodology strong { color: #1F3864; }
-.methodology code {
-  background: #F0F4F9;
-  padding: 1px 4px;
-  border-radius: 3px;
-  font-size: 11px;
-  color: #1F3864;
-}
-.methodology a { color: #1F3864; }
-footer {
-  margin-top: 32px;
-  padding-top: 18px;
-  border-top: 1px solid #E0E6EE;
-  font-size: 12px;
-  color: #595959;
-}
+  :root {
+    --navy: #1F3864;
+    --navy-soft: #34528a;
+    --ink: #0f172a;
+    --muted: #5b6577;
+    --line: #e3e7ee;
+    --line-soft: #f1f3f7;
+    --bg: #ffffff;
+    --bg-soft: #f7f9fc;
+    --bg-tile: #eef2f8;
+    --green: #1f7a3e;
+    --amber: #b6701e;
+    --new: #b21b1b;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--ink); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 32px 20px 80px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  h1 {
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 0 0 4px 0;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+  .subhead {
+    margin: 0 0 14px 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .scan-line {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--bg-soft);
+    color: var(--navy);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .chip-new {
+    background: #fdf0ef;
+    color: var(--new);
+    border-color: #f4d0cd;
+  }
+  .view-toggle {
+    display: inline-flex;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+    margin-bottom: 16px;
+  }
+  .view-toggle button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .view-toggle button.active {
+    background: var(--navy);
+    color: #fff;
+  }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+    align-items: center;
+  }
+  .controls input[type="search"] {
+    flex: 1 1 220px;
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    background: var(--bg);
+  }
+  .controls select {
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    background: var(--bg);
+    cursor: pointer;
+  }
+  .list { }
+  .outlet-row {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 2fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .outlet-row:first-child { border-top: 1px solid var(--line); }
+  .outlet-meta a.outlet-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+    line-height: 1.25;
+    display: inline-block;
+  }
+  .outlet-meta a.outlet-name:hover { text-decoration: underline; }
+  .outlet-meta .homepage {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 2px;
+    word-break: break-all;
+  }
+  .impact-pill {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .impact-pill:hover { background: #e9eef7; }
+  .impact-pill.new::after {
+    content: "NEW";
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    background: #fdf0ef;
+    color: var(--new);
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .no-reports {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 14px;
+  }
+  .reports { display: flex; flex-direction: column; gap: 10px; }
+  .report-card {
+    display: block;
+    padding: 12px 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.1s;
+  }
+  .report-card:hover { background: #eef3fb; }
+  .report-card .title {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 15px;
+  }
+  .report-card .meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    padding: 1px 8px;
+    background: var(--bg-tile);
+    color: var(--navy);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .badge.pdf { background: #fbe9e7; color: #a72b1e; }
+  .badge.html { background: #e7eef8; color: var(--navy); }
+  .badge.new { background: #fdf0ef; color: var(--new); }
+  details.earlier { margin-top: 6px; }
+  details.earlier summary {
+    cursor: pointer;
+    color: var(--navy-soft);
+    font-size: 13px;
+    padding: 4px 0;
+    list-style: none;
+  }
+  details.earlier summary::-webkit-details-marker { display: none; }
+  details.earlier summary::before { content: "▸ "; font-size: 10px; }
+  details.earlier[open] summary::before { content: "▾ "; }
+  details.earlier ul {
+    margin: 8px 0 0 0;
+    padding-left: 18px;
+    font-size: 13px;
+  }
+  details.earlier li { margin-bottom: 4px; }
+  details.earlier a { color: var(--navy); }
+  /* MAP VIEW */
+  #map-view { display: none; }
+  #map-view.active { display: block; }
+  #list-view.hidden { display: none; }
+  .map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .map-legend .swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+    gap: 4px;
+    padding: 18px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .map-tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--bg-tile);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    user-select: none;
+    border: 1px solid transparent;
+  }
+  .map-tile.has-outlets {
+    background: #dde6f4;
+    color: var(--navy);
+    cursor: pointer;
+    border-color: #bccae0;
+  }
+  .map-tile.has-outlets:hover {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+  .map-tile.has-outlets.has-new {
+    background: #f8d4d0;
+    color: var(--new);
+    border-color: #e6a5a0;
+  }
+  .map-tile.has-outlets.has-new:hover {
+    background: var(--new);
+    color: #fff;
+  }
+  .map-tile .count-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 9px;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid var(--bg-soft);
+  }
+  .map-tile.has-new .count-badge { background: var(--new); }
+  #map-detail {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    min-height: 80px;
+  }
+  #map-detail.empty {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 14px;
+    text-align: center;
+    padding: 26px 14px;
+  }
+  #map-detail h3 {
+    margin: 0 0 10px 0;
+    color: var(--navy);
+    font-size: 16px;
+  }
+  #map-detail .outlet-line {
+    padding: 10px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  #map-detail .outlet-line:first-of-type { border-top: 0; }
+  #map-detail .outlet-line a {
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  #map-detail .outlet-line a:hover { text-decoration: underline; }
+  #map-detail .outlet-line .reports-info {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  @media (max-width: 720px) {
+    .outlet-row { grid-template-columns: 1fr; }
+    .map-grid { gap: 2px; padding: 10px; }
+    .map-tile { font-size: 9px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>AJP Portfolio &mdash; Impact Reports</h1>
-    <div class="subtitle">A single source for recent (2024&ndash;2026) impact reports across 39 American Journalism Project grantee newsrooms.</div>
-    <div class="scanned-line">Last scanned: <span class="stamp" id="scanned-stamp"></span></div>
-    <div class="chips" id="summary-chips"></div>
-  </header>
+  <h1>AJP Portfolio — Impact Reports</h1>
+  <p class="subhead">A single source for impact reports across 39 American Journalism Project grantee newsrooms.</p>
+  <div class="scan-line">Last scanned: May 11, 2026 at 10:33 PM ET</div>
 
-  <div class="controls">
-    <input type="text" id="search-input" placeholder="Filter by outlet name&hellip;" autocomplete="off">
-    <select id="year-filter">
-      <option value="all" selected>Year: All</option>
-      <option value="2026">Year: 2026</option>
-      <option value="2025">Year: 2025</option>
-      <option value="2024">Year: 2024</option>
-    </select>
-    <select id="sort-select">
-      <option value="recent" selected>Sort: Latest report year</option>
-      <option value="name">Sort: Outlet name (A&ndash;Z)</option>
-      <option value="most">Sort: Most reports first</option>
-    </select>
+  <div class="chips">
+    <span class="chip">36 of 39 outlets indexed</span>
+    <span class="chip">37 reports total</span>
+    <span class="chip chip-new">11 new since last scan</span>
   </div>
 
-  <div id="outlets"></div>
-  <div id="empty-search">No outlets match that filter.</div>
+  <div class="view-toggle" role="tablist" aria-label="View mode">
+    <button id="btn-list" class="active" type="button" role="tab" aria-selected="true">List</button>
+    <button id="btn-map" type="button" role="tab" aria-selected="false">Map</button>
+  </div>
 
-  <footer>
-    <div class="methodology">
-      <h2>Methodology &amp; disclosures</h2>
-      <p><strong>Scope.</strong> 39 newsrooms in the American Journalism Project portfolio. The list of outlets is fixed for this dashboard and is updated only when AJP&rsquo;s public portfolio changes.</p>
-      <p><strong>Date filter.</strong> Only reports labeled 2024, 2025, or 2026 are shown. Older impact reports the outlets may have published (e.g., 2021&ndash;2023 annual reports) are intentionally excluded from this view, even if they still exist on the outlet&rsquo;s site. Undated permanent &ldquo;Our Impact&rdquo; landing pages, where they exist, are included regardless of age because they typically aggregate current and historical impact.</p>
-      <p><strong>What counts as an impact report.</strong> Two things: (1) <em>formal dated reports</em> &mdash; multi-page annual reports, quarterly reports, year-in-review documents, donor/impact reports with a clear fiscal-period label, in PDF or HTML; and (2) <em>permanent impact landing pages</em> &mdash; pages titled &ldquo;Impact&rdquo;, &ldquo;Our Impact&rdquo;, or &ldquo;About &rarr; Impact&rdquo; that summarize how the outlet&rsquo;s reporting has affected policy or community outcomes. Individual story-level impact updates, donor acknowledgment pages, investigative series titled &ldquo;Impact&rdquo; without a structured summary wrapper, and press releases announcing impact reports do <em>not</em> qualify.</p>
-      <p><strong>How outlets are scanned.</strong> Each outlet is queried via web search using two to three site-restricted queries per outlet (combinations of <code>site:domain &ldquo;impact report&rdquo;</code>, <code>&ldquo;annual report&rdquo;</code>, <code>&ldquo;year in review&rdquo;</code>, <code>&ldquo;our impact&rdquo;</code>, and <code>filetype:pdf</code>). Results are filtered by hand against the definitions above. When more than three qualifying reports are found, the three most recent are shown and the rest are tucked into &ldquo;earlier reports&rdquo; expanders.</p>
-      <p><strong>NEW detection.</strong> Each scan compares discovered report URLs against the previous scan&rsquo;s <code>state.json</code>. URLs not in the prior set are marked <span class="badge new" style="position:relative;top:-1px;">NEW</span>. The first scan establishes the baseline and carries no NEW flags.</p>
-      <p><strong>Refresh cadence.</strong> On-demand only &mdash; this dashboard refreshes when a user explicitly runs the scan. It is not on a recurring schedule, so the &ldquo;Last scanned&rdquo; timestamp at the top reflects the most recent manual run.</p>
-      <p><strong>Limitations.</strong> Coverage depends on what web search indexes for each outlet&rsquo;s domain; some impact reports embedded in newsletters, gated donor portals, or PDF-only on subdomains may not surface. Where an outlet has not published a dated report but maintains a permanent impact page, that page is captured so the row still appears as indexed. Outlets with neither a dated 2024&ndash;2026 report nor a permanent impact page sink to the bottom of the list under &ldquo;No impact reports indexed yet.&rdquo;</p>
-      <p><strong>Public mirror.</strong> <a href="https://baybarso.github.io/ajp-news-dashboard/impact/" target="_blank" rel="noopener">baybarso.github.io/ajp-news-dashboard/impact/</a>. The underlying state file is at <a href="https://baybarso.github.io/ajp-news-dashboard/impact/state.json" target="_blank" rel="noopener">impact/state.json</a>.</p>
+  <div id="list-view">
+    <div class="controls">
+      <input id="filter" type="search" placeholder="Search outlets by name…" autocomplete="off">
+      <select id="sort">
+        <option value="latest">Sort: Latest report year</option>
+        <option value="alpha">Sort: Outlet name (A–Z)</option>
+        <option value="count">Sort: Most reports first</option>
+      </select>
     </div>
-  </footer>
+    <div id="list" class="list"></div>
+  </div>
+
+  <div id="map-view">
+    <div class="map-legend">
+      <span><span class="swatch" style="background:#dde6f4;border:1px solid #bccae0"></span>Newsroom present</span>
+      <span><span class="swatch" style="background:#f8d4d0;border:1px solid #e6a5a0"></span>New report since last scan</span>
+      <span><span class="swatch" style="background:var(--bg-tile)"></span>No AJP grantee in this state</span>
+      <span style="margin-left:auto;font-size:11px">Click a state to see its newsroom(s)</span>
+    </div>
+    <div id="map-grid" class="map-grid"></div>
+    <div id="map-detail" class="empty">Click on a state with a newsroom to see details.</div>
+  </div>
 </div>
 
-<script id="impact-data" type="application/json">[{"outlet": "The Beacon", "outletSlug": "the-beacon", "homepage": "https://thebeaconnews.org/", "reports": [], "impactPage": {"title": "Our Impact", "url": "https://thebeaconnews.org/impact/"}, "status": "found"}, {"outlet": "Block Club Chicago", "outletSlug": "block-club-chicago", "homepage": "https://blockclubchicago.org/", "reports": [{"title": "2025 Annual Report", "url": "https://blockclubchicago.org/2025-annual-report/", "year": 2025, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "Capital B News", "outletSlug": "capital-b-news", "homepage": "https://capitalbnews.org/", "reports": [{"title": "Black Stories You May Have Missed in 2024 (Year-in-Review)", "url": "https://capitalbnews.org/end-of-year-2024-capital-b/", "year": 2024, "format": "html"}, {"title": "Capital B in the Next Three: 2025-2028 Strategic Plan", "url": "https://capitalbnews.org/capitalb-2025-2028-strategic-plan/", "year": 2025, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "Centro de Periodismo Investigativo", "outletSlug": "cpi-puerto-rico", "homepage": "https://periodismoinvestigativo.com/", "reports": [], "impactPage": {"title": "Transparencia", "url": "https://periodismoinvestigativo.com/transparencia/"}, "status": "found"}, {"outlet": "Charlottesville Tomorrow", "outletSlug": "charlottesville-tomorrow", "homepage": "https://www.cvilletomorrow.org/", "reports": [], "impactPage": null, "status": "no_reports_found"}, {"outlet": "THE CITY", "outletSlug": "the-city", "homepage": "https://www.thecity.nyc/", "reports": [{"title": "Impact Reports", "url": "https://www.thecity.nyc/impact-reports/", "format": "html"}], "impactPage": {"title": "Impact", "url": "https://www.thecity.nyc/impact/"}, "status": "found"}, {"outlet": "City Bureau", "outletSlug": "city-bureau", "homepage": "https://www.citybureau.org/", "reports": [{"title": "Annual Report 2024", "url": "https://www.citybureau.org/annual-report-2024", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "Civic News Company", "outletSlug": "civic-news-company", "homepage": "https://civicnews.org/", "reports": [], "impactPage": {"title": "About Us & History", "url": "https://civicnews.org/about-us-history/"}, "status": "found"}, {"outlet": "The Colorado Sun", "outletSlug": "colorado-sun", "homepage": "https://coloradosun.com/", "reports": [{"title": "2025 Annual Report", "url": "https://coloradosun.com/2025-annual-report/", "year": 2025, "format": "html"}], "impactPage": {"title": "Annual Reports", "url": "https://coloradosun.com/annual-reports/"}, "status": "found"}, {"outlet": "CT Mirror", "outletSlug": "ct-mirror", "homepage": "https://ctmirror.org/", "reports": [{"title": "Community Engagement Reporting: The Year in Review", "url": "https://ctmirror.org/2025/12/28/ct-mirror-community-engagement-reporters/", "year": 2025, "format": "html"}], "impactPage": {"title": "Annual Report", "url": "https://ctmirror.org/about/annualreport/"}, "status": "found"}, {"outlet": "Deep South Today", "outletSlug": "deep-south-today", "homepage": "https://deepsouthtoday.org/", "reports": [{"title": "Verite News — How Our Reporting Made an Impact in 2025", "url": "https://veritenews.org/2025/12/30/new-orleans-news-impact-2025-jimmie-duncan-hurricane-katrina/", "year": 2025, "format": "html"}], "impactPage": {"title": "Who Funds Us (Transparency)", "url": "https://deepsouthtoday.org/who-funds-us/"}, "status": "found"}, {"outlet": "Documented", "outletSlug": "documented", "homepage": "https://documentedny.com/", "reports": [], "impactPage": null, "status": "no_reports_found"}, {"outlet": "El Paso Matters", "outletSlug": "el-paso-matters", "homepage": "https://elpasomatters.org/", "reports": [{"title": "2024 Impact Report", "url": "https://elpasomatters.org/2024-impact-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "Free Press Indiana", "outletSlug": "free-press-indiana", "homepage": "https://www.freepressindiana.org/", "reports": [], "impactPage": {"title": "About (Mission & Progress)", "url": "https://www.freepressindiana.org/about"}, "status": "found"}, {"outlet": "Grist", "outletSlug": "grist", "homepage": "https://grist.org/", "reports": [], "impactPage": null, "status": "no_reports_found"}, {"outlet": "Houston Landing", "outletSlug": "houston-landing", "homepage": "https://houstonlanding.org/", "reports": [], "impactPage": {"title": "Impact Report", "url": "https://www.houstonlanding.org/impact-report/"}, "status": "found"}, {"outlet": "ICT News", "outletSlug": "ict-news", "homepage": "https://ictnews.org/", "reports": [{"title": "The Power of Indigenous Journalism: ICT's 2024 Impact Report", "url": "https://ictnews.org/the-press-pool/the-power-of-indigenous-journalism-icts-2024-impact-report/", "year": 2024, "format": "html"}], "impactPage": {"title": "About Us (Transparency)", "url": "https://ictnews.org/about-us/"}, "status": "found"}, {"outlet": "inewsource", "outletSlug": "inewsource", "homepage": "https://inewsource.org/", "reports": [], "impactPage": {"title": "Standards and Financials", "url": "https://inewsource.org/standards-and-financials/"}, "status": "found"}, {"outlet": "Louisville Public Media", "outletSlug": "louisville-public-media", "homepage": "https://www.lpm.org/", "reports": [], "impactPage": {"title": "LPM Impact", "url": "https://impact.lpm.org/"}, "status": "found"}, {"outlet": "The Marshall Project", "outletSlug": "marshall-project", "homepage": "https://www.themarshallproject.org/", "reports": [{"title": "Annual Reports", "url": "https://www.themarshallproject.org/about/reports", "format": "html"}], "impactPage": {"title": "Impact", "url": "https://www.themarshallproject.org/about/impact"}, "status": "found"}, {"outlet": "Montana Free Press", "outletSlug": "montana-free-press", "homepage": "https://montanafreepress.org/", "reports": [{"title": "MTFP 2025 Growth & Gratitude Report", "url": "https://montanafreepress.org/mtfp-2025-growth-gratitude-report/", "year": 2025, "format": "html"}, {"title": "MTFP 2024 Growth & Gratitude Report", "url": "https://montanafreepress.org/mtfp-2024-growth-gratitude-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "Mountain State Spotlight", "outletSlug": "mountain-state-spotlight", "homepage": "https://mountainstatespotlight.org/", "reports": [{"title": "2024 Impact Report — Four Years of Accountability", "url": "https://mountainstatespotlight.org/2024-impact-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "The Nevada Independent", "outletSlug": "nevada-independent", "homepage": "https://thenevadaindependent.com/", "reports": [{"title": "An Update on The Indy (CEO letter, July 2024)", "url": "https://thenevadaindependent.com/article/an-update-on-the-indy", "year": 2024, "format": "html"}, {"title": "Change and Hope (CEO letter, Feb 2024)", "url": "https://thenevadaindependent.com/article/change-and-hope", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "New York Focus", "outletSlug": "new-york-focus", "homepage": "https://nysfocus.com/", "reports": [], "impactPage": {"title": "Impact (Five-Year Impact Report)", "url": "https://nysfocus.com/impact"}, "status": "found"}, {"outlet": "Open Campus", "outletSlug": "open-campus", "homepage": "https://www.opencampus.org/", "reports": [{"title": "Open Campus Reporters Told More Than 500 Stories in 2024 — Here's Why They Matter", "url": "https://www.opencampus.org/2024/12/18/open-campus-reporters-told-more-than-500-stories-in-2024-heres-why-they-matter/", "year": 2024, "format": "html"}], "impactPage": {"title": "About Open Campus", "url": "https://www.opencampus.org/about-open-campus/"}, "status": "found"}, {"outlet": "Outlier Media", "outletSlug": "outlier-media", "homepage": "https://outliermedia.org/", "reports": [{"title": "2024 in Review: Outlier Media's Top Stories of the Year", "url": "https://outliermedia.org/detroit-year-in-review-2024/", "year": 2024, "format": "html"}], "impactPage": {"title": "Annual Report", "url": "https://outliermedia.org/about/annual-report/"}, "status": "found"}, {"outlet": "Sahan Journal", "outletSlug": "sahan-journal", "homepage": "https://sahanjournal.com/", "reports": [{"title": "Sahan Journal Impact Report 2024", "url": "https://sahanjournal.com/wp-content/uploads/2024/06/Sahan-Journal-Impact-Report-2024-1.pdf", "year": 2024, "format": "pdf"}, {"title": "New Impact Report (announcement)", "url": "https://sahanjournal.com/inside-sahan-journal/sahan-journal-diverse-journalism-minnesota-news-impact-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "The Salt Lake Tribune", "outletSlug": "salt-lake-tribune", "homepage": "https://www.sltrib.com/", "reports": [{"title": "2024 Annual Report", "url": "https://www.sltrib.com/about-us/annual-report/2024/", "year": 2024, "format": "html"}], "impactPage": {"title": "Reports", "url": "https://www.sltrib.com/reports/"}, "status": "found"}, {"outlet": "San José Spotlight", "outletSlug": "san-jose-spotlight", "homepage": "https://sanjosespotlight.com/", "reports": [{"title": "2024 in Review: San Jose City Council's Top Decisions", "url": "https://sanjosespotlight.com/2024-in-review-san-jose-city-councils-top-decisions/", "year": 2024, "format": "html"}], "impactPage": {"title": "About Us (Transparency)", "url": "https://sanjosespotlight.com/about-us/"}, "status": "found"}, {"outlet": "Signal Ohio", "outletSlug": "signal-ohio", "homepage": "https://signalohio.org/", "reports": [{"title": "525,600 Minutes of News: The Signal Stories That Defined 2025", "url": "https://signalohio.org/525600-minutes-of-news-the-signal-stories-that-defined-2025/", "year": 2025, "format": "html"}], "impactPage": {"title": "Governance & Transparency", "url": "https://signalohio.org/governance-transparency/"}, "status": "found"}, {"outlet": "Spotlight PA", "outletSlug": "spotlight-pa", "homepage": "https://www.spotlightpa.org/", "reports": [], "impactPage": {"title": "Impact", "url": "https://www.spotlightpa.org/about/impact/"}, "status": "found"}, {"outlet": "The Texas Tribune", "outletSlug": "texas-tribune", "homepage": "https://www.texastribune.org/", "reports": [], "impactPage": {"title": "Documents (Annual Reports & Financials)", "url": "https://www.texastribune.org/about/documents"}, "status": "found"}, {"outlet": "Tulsa Local News Initiative", "outletSlug": "tulsa-local-news", "homepage": "https://www.localnewsfortulsa.org/", "reports": [], "impactPage": {"title": "About Tulsa Local News Initiative", "url": "https://www.localnewsfortulsa.org/about-us"}, "status": "found"}, {"outlet": "VTDigger", "outletSlug": "vtdigger", "homepage": "https://vtdigger.org/", "reports": [{"title": "2025 Annual Report", "url": "https://vtdigger.org/2025-annual-report/", "year": 2025, "format": "html"}, {"title": "2024 Annual Report", "url": "https://vtdigger.org/2024-annual-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}, {"outlet": "WFAE", "outletSlug": "wfae", "homepage": "https://www.wfae.org/", "reports": [], "impactPage": {"title": "Annual Reports & Public Information", "url": "https://www.wfae.org/public-information"}, "status": "found"}, {"outlet": "Wisconsin Watch", "outletSlug": "wisconsin-watch", "homepage": "https://wisconsinwatch.org/", "reports": [], "impactPage": {"title": "Annual Reports", "url": "https://wisconsinwatch.org/annual-reports/"}, "status": "found"}, {"outlet": "WyoFile", "outletSlug": "wyofile", "homepage": "https://wyofile.com/", "reports": [{"title": "2024 Annual Report", "url": "https://wyofile.com/wp-content/uploads/2025/04/WyoFile-Annual-Report-2024_final.pdf", "year": 2024, "format": "pdf"}], "impactPage": {"title": "Reports", "url": "https://wyofile.com/about/reports/"}, "status": "found"}, {"outlet": "The LA Local", "outletSlug": "la-local", "homepage": "https://thelalocal.org/", "reports": [{"title": "Welcome to The LA Local: We Built This Newsroom for You (Launch Manifesto)", "url": "https://thelalocal.org/news/welcome-to-the-la-local-we-built-this-newsroom-for-you/", "year": 2025, "format": "html"}], "impactPage": {"title": "About The LA Local", "url": "https://thelalocal.org/about/"}, "status": "found"}, {"outlet": "Nashville Banner", "outletSlug": "nashville-banner", "homepage": "https://nashvillebanner.com/", "reports": [{"title": "The 2024-25 Nashville Banner Impact Report", "url": "https://nashvillebanner.com/2025/08/12/nashville-banner-impact-report/", "year": 2025, "format": "html"}, {"title": "Best of the Banner 2024 (Year-in-Review)", "url": "https://nashvillebanner.com/newsletter/best-of-the-banner-2024/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found"}]</script>
+<script id="impact-data" type="application/json">[{"outlet": "The Beacon", "outletSlug": "the-beacon", "homepage": "https://thebeaconnews.org/", "reports": [], "impactPage": {"title": "The Beacon's Impact in Kansas and Missouri", "url": "https://thebeaconnews.org/impact/"}, "status": "found", "location": {"state": "MO", "tile": [5, 4], "lat": 39.1, "lng": -94.58}}, {"outlet": "Block Club Chicago", "outletSlug": "block-club-chicago", "homepage": "https://blockclubchicago.org/", "reports": [{"title": "2025 Annual Report", "url": "https://blockclubchicago.org/2025-annual-report/", "year": 2025, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "IL", "tile": [6, 3], "lat": 41.88, "lng": -87.63}}, {"outlet": "Capital B News", "outletSlug": "capital-b-news", "homepage": "https://capitalbnews.org/", "reports": [{"title": "Black Stories You May Have Missed in 2024 (Year-in-Review)", "url": "https://capitalbnews.org/end-of-year-2024-capital-b/", "year": 2024, "format": "html"}, {"title": "Capital B in the Next Three: 2025-2028 Strategic Plan", "url": "https://capitalbnews.org/capitalb-2025-2028-strategic-plan/", "year": 2025, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "GA", "tile": [8, 6], "lat": 33.75, "lng": -84.39}}, {"outlet": "Centro de Periodismo Investigativo", "outletSlug": "centro-de-periodismo-investigativo", "homepage": "https://periodismoinvestigativo.com/", "reports": [], "impactPage": {"title": "Transparencia", "url": "https://periodismoinvestigativo.com/transparencia/"}, "status": "found", "location": {"state": "PR", "tile": [10, 7], "lat": 18.47, "lng": -66.11}}, {"outlet": "Charlottesville Tomorrow", "outletSlug": "charlottesville-tomorrow", "homepage": "https://www.cvilletomorrow.org/", "reports": [], "impactPage": null, "status": "no_reports_found", "location": {"state": "VA", "tile": [9, 4], "lat": 38.03, "lng": -78.48}}, {"outlet": "THE CITY", "outletSlug": "the-city", "homepage": "https://www.thecity.nyc/", "reports": [], "impactPage": {"title": "Impact & Awards", "url": "https://www.thecity.nyc/impact-and-awards/", "new": true}, "status": "found", "location": {"state": "NY", "tile": [9, 2], "lat": 40.71, "lng": -74.01}}, {"outlet": "City Bureau", "outletSlug": "city-bureau", "homepage": "https://www.citybureau.org/", "reports": [{"title": "Annual Report 2024", "url": "https://www.citybureau.org/annual-report-2024", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "IL", "tile": [6, 3], "lat": 41.88, "lng": -87.63}}, {"outlet": "Civic News Company", "outletSlug": "civic-news-company", "homepage": "https://civicnews.org/", "reports": [], "impactPage": {"title": "Financial Information (Annual Reports & 990s)", "url": "https://civicnews.org/financial-information/", "new": true}, "status": "found", "location": {"state": "NY", "tile": [9, 2], "lat": 40.71, "lng": -74.01}}, {"outlet": "The Colorado Sun", "outletSlug": "the-colorado-sun", "homepage": "https://coloradosun.com/", "reports": [{"title": "2025 Annual Report", "url": "https://coloradosun.com/2025-annual-report/", "year": 2025, "format": "html"}, {"title": "2023 Annual Report", "url": "https://coloradosun.com/colorado-sun-annual-report-2023/", "year": 2023, "format": "html", "new": true}], "impactPage": {"title": "Annual Reports", "url": "https://coloradosun.com/annual-reports/"}, "status": "found", "location": {"state": "CO", "tile": [4, 4], "lat": 39.74, "lng": -104.99}}, {"outlet": "CT Mirror", "outletSlug": "ct-mirror", "homepage": "https://ctmirror.org/", "reports": [{"title": "Community Engagement Reporting: The Year in Review", "url": "https://ctmirror.org/2025/12/28/ct-mirror-community-engagement-reporters/", "year": 2025, "format": "html"}, {"title": "2022 Annual Report to the State", "url": "https://ctmirror.org/2022/12/13/ct-mirror-releases-2022-annual-report-to-the-state/", "year": 2022, "format": "html", "new": true}, {"title": "2021 Annual Report to the State", "url": "https://ctmirror.org/2021/12/10/read-our-2021-annual-report-to-the-state/", "year": 2021, "format": "html", "new": true}], "impactPage": {"title": "Annual Report", "url": "https://ctmirror.org/about/annualreport/"}, "status": "found", "location": {"state": "CT", "tile": [10, 3], "lat": 41.77, "lng": -72.67}}, {"outlet": "Deep South Today", "outletSlug": "deep-south-today", "homepage": "https://deepsouthtoday.org/", "reports": [{"title": "Verite News — How Our Reporting Made an Impact in 2025", "url": "https://veritenews.org/2025/12/30/new-orleans-news-impact-2025-jimmie-duncan-hurricane-katrina/", "year": 2025, "format": "html"}], "impactPage": {"title": "Who Funds Us (Transparency)", "url": "https://deepsouthtoday.org/who-funds-us/"}, "status": "found", "location": {"state": "MS", "tile": [6, 6], "lat": 32.3, "lng": -90.18}}, {"outlet": "Documented", "outletSlug": "documented", "homepage": "https://documentedny.com/", "reports": [], "impactPage": null, "status": "no_reports_found", "location": {"state": "NY", "tile": [9, 2], "lat": 40.71, "lng": -74.01}}, {"outlet": "El Paso Matters", "outletSlug": "el-paso-matters", "homepage": "https://elpasomatters.org/", "reports": [{"title": "2024 Impact Report", "url": "https://elpasomatters.org/2024-impact-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "TX", "tile": [4, 7], "lat": 31.76, "lng": -106.49}}, {"outlet": "Free Press Indiana", "outletSlug": "free-press-indiana", "homepage": "https://www.freepressindiana.org/", "reports": [], "impactPage": {"title": "About (Mission & Progress)", "url": "https://www.freepressindiana.org/about"}, "status": "found", "location": {"state": "IN", "tile": [7, 3], "lat": 39.77, "lng": -86.16}}, {"outlet": "Grist", "outletSlug": "grist", "homepage": "https://grist.org/", "reports": [], "impactPage": null, "status": "no_reports_found", "location": {"state": "WA", "tile": [1, 2], "lat": 47.61, "lng": -122.33}}, {"outlet": "Houston Landing", "outletSlug": "houston-landing", "homepage": "https://houstonlanding.org/", "reports": [], "impactPage": {"title": "Impact Report", "url": "https://www.houstonlanding.org/impact-report/"}, "status": "found", "location": {"state": "TX", "tile": [4, 7], "lat": 29.76, "lng": -95.37}}, {"outlet": "ICT News", "outletSlug": "ict-news", "homepage": "https://ictnews.org/", "reports": [{"title": "The Power of Indigenous Journalism: ICT's 2024 Impact Report", "url": "https://ictnews.org/the-press-pool/the-power-of-indigenous-journalism-icts-2024-impact-report/", "year": 2024, "format": "html"}], "impactPage": {"title": "About Us (Transparency)", "url": "https://ictnews.org/about-us/"}, "status": "found", "location": {"state": "AZ", "tile": [2, 5], "lat": 33.45, "lng": -112.07}}, {"outlet": "inewsource", "outletSlug": "inewsource", "homepage": "https://inewsource.org/", "reports": [{"title": "2023 Annual Impact Report", "url": "https://inewsource.org/wp-content/uploads/2023/12/inewsource2023AnnualImpactReport.pdf", "year": 2023, "format": "pdf", "new": true}, {"title": "2022 Annual Impact Report", "url": "https://inewsource.org/wp-content/uploads/2022/12/inewsource2022AnnualImpactReport.pdf", "year": 2022, "format": "pdf", "new": true}], "impactPage": {"title": "Standards and Financials", "url": "https://inewsource.org/standards-and-financials/"}, "status": "found", "location": {"state": "CA", "tile": [1, 5], "lat": 32.72, "lng": -117.16}}, {"outlet": "Louisville Public Media", "outletSlug": "louisville-public-media", "homepage": "https://www.lpm.org/", "reports": [], "impactPage": {"title": "LPM Impact", "url": "https://impact.lpm.org/"}, "status": "found", "location": {"state": "KY", "tile": [7, 4], "lat": 38.25, "lng": -85.76}}, {"outlet": "The Marshall Project", "outletSlug": "the-marshall-project", "homepage": "https://www.themarshallproject.org/", "reports": [{"title": "Annual Reports (multi-year archive)", "url": "https://www.themarshallproject.org/about/reports", "format": "html"}], "impactPage": {"title": "Impact", "url": "https://www.themarshallproject.org/about/impact"}, "status": "found", "location": {"state": "NY", "tile": [9, 2], "lat": 40.71, "lng": -74.01}}, {"outlet": "Montana Free Press", "outletSlug": "montana-free-press", "homepage": "https://montanafreepress.org/", "reports": [{"title": "MTFP 2025 Growth & Gratitude Report", "url": "https://montanafreepress.org/mtfp-2025-growth-gratitude-report/", "year": 2025, "format": "html"}, {"title": "MTFP 2024 Growth & Gratitude Report", "url": "https://montanafreepress.org/mtfp-2024-growth-gratitude-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "MT", "tile": [2, 2], "lat": 46.59, "lng": -112.04}}, {"outlet": "Mountain State Spotlight", "outletSlug": "mountain-state-spotlight", "homepage": "https://mountainstatespotlight.org/", "reports": [{"title": "2024 Impact Report — Four Years of Accountability", "url": "https://mountainstatespotlight.org/2024-impact-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "WV", "tile": [8, 4], "lat": 38.35, "lng": -81.63}}, {"outlet": "The Nevada Independent", "outletSlug": "the-nevada-independent", "homepage": "https://thenevadaindependent.com/", "reports": [{"title": "An Update on The Indy (CEO letter, July 2024)", "url": "https://thenevadaindependent.com/article/an-update-on-the-indy", "year": 2024, "format": "html"}, {"title": "Change and Hope (CEO letter, Feb 2024)", "url": "https://thenevadaindependent.com/article/change-and-hope", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "NV", "tile": [2, 4], "lat": 36.17, "lng": -115.14}}, {"outlet": "New York Focus", "outletSlug": "new-york-focus", "homepage": "https://nysfocus.com/", "reports": [], "impactPage": {"title": "Impact (Five-Year Impact Report)", "url": "https://nysfocus.com/impact"}, "status": "found", "location": {"state": "NY", "tile": [9, 2], "lat": 40.71, "lng": -74.01}}, {"outlet": "Open Campus", "outletSlug": "open-campus", "homepage": "https://www.opencampus.org/", "reports": [{"title": "Open Campus Reporters Told More Than 500 Stories in 2024 — Here's Why They Matter", "url": "https://www.opencampus.org/2024/12/18/open-campus-reporters-told-more-than-500-stories-in-2024-heres-why-they-matter/", "year": 2024, "format": "html"}], "impactPage": {"title": "About Open Campus", "url": "https://www.opencampus.org/about-open-campus/"}, "status": "found", "location": {"state": "NY", "tile": [9, 2], "lat": 40.71, "lng": -74.01}}, {"outlet": "Outlier Media", "outletSlug": "outlier-media", "homepage": "https://outliermedia.org/", "reports": [{"title": "2024 in Review: Outlier Media's Top Stories of the Year", "url": "https://outliermedia.org/detroit-year-in-review-2024/", "year": 2024, "format": "html"}], "impactPage": {"title": "Annual Report", "url": "https://outliermedia.org/about/annual-report/"}, "status": "found", "location": {"state": "MI", "tile": [7, 2], "lat": 42.33, "lng": -83.05}}, {"outlet": "Sahan Journal", "outletSlug": "sahan-journal", "homepage": "https://sahanjournal.com/", "reports": [{"title": "Sahan Journal Impact Report 2024", "url": "https://sahanjournal.com/wp-content/uploads/2024/06/Sahan-Journal-Impact-Report-2024-1.pdf", "year": 2024, "format": "pdf"}, {"title": "Impact Report (announcement)", "url": "https://sahanjournal.com/inside-sahan-journal/sahan-journal-diverse-journalism-minnesota-news-impact-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "MN", "tile": [4, 1], "lat": 44.98, "lng": -93.27}}, {"outlet": "The Salt Lake Tribune", "outletSlug": "the-salt-lake-tribune", "homepage": "https://www.sltrib.com/", "reports": [{"title": "2025 Annual Report and Lookahead to 2026", "url": "https://www.sltrib.com/footer/2025/11/21/tribunes-2025-annual-report/", "year": 2025, "format": "html", "new": true}, {"title": "2024 Annual Report", "url": "https://www.sltrib.com/about-us/annual-report/2024/", "year": 2024, "format": "html"}], "impactPage": {"title": "Reports", "url": "https://www.sltrib.com/reports/"}, "status": "found", "location": {"state": "UT", "tile": [3, 4], "lat": 40.76, "lng": -111.89}}, {"outlet": "San José Spotlight", "outletSlug": "san-jose-spotlight", "homepage": "https://sanjosespotlight.com/", "reports": [{"title": "2024 in Review: San Jose City Council's Top Decisions", "url": "https://sanjosespotlight.com/2024-in-review-san-jose-city-councils-top-decisions/", "year": 2024, "format": "html"}], "impactPage": {"title": "About Us (Transparency)", "url": "https://sanjosespotlight.com/about-us/"}, "status": "found", "location": {"state": "CA", "tile": [1, 5], "lat": 37.34, "lng": -121.89}}, {"outlet": "Signal Ohio", "outletSlug": "signal-ohio", "homepage": "https://signalohio.org/", "reports": [{"title": "525,600 Minutes of News: The Signal Stories That Defined 2025", "url": "https://signalohio.org/525600-minutes-of-news-the-signal-stories-that-defined-2025/", "year": 2025, "format": "html"}], "impactPage": {"title": "Governance & Transparency", "url": "https://signalohio.org/governance-transparency/"}, "status": "found", "location": {"state": "OH", "tile": [8, 3], "lat": 41.5, "lng": -81.69}}, {"outlet": "Spotlight PA", "outletSlug": "spotlight-pa", "homepage": "https://www.spotlightpa.org/", "reports": [], "impactPage": {"title": "Impact", "url": "https://www.spotlightpa.org/about/impact/"}, "status": "found", "location": {"state": "PA", "tile": [9, 3], "lat": 40.27, "lng": -76.89}}, {"outlet": "The Texas Tribune", "outletSlug": "the-texas-tribune", "homepage": "https://www.texastribune.org/", "reports": [{"title": "2022 Annual Report", "url": "https://static.texastribune.org/media/files/a5c56a036a501f1a876f037fb2f5c715/TT-2022-Annual-Report-090123.pdf", "year": 2022, "format": "pdf", "new": true}, {"title": "2021 Annual Report", "url": "https://static.texastribune.org/media/files/14d6468ed89edb26db46a95949fd04b8/TT-2021-Annual-Report-Web_05-25-2022.pdf", "year": 2021, "format": "pdf", "new": true}], "impactPage": {"title": "Documents (Annual Reports & Financials)", "url": "https://www.texastribune.org/about/documents"}, "status": "found", "location": {"state": "TX", "tile": [4, 7], "lat": 30.27, "lng": -97.74}}, {"outlet": "Tulsa Local News Initiative", "outletSlug": "tulsa-local-news-initiative", "homepage": "https://www.localnewsfortulsa.org/", "reports": [], "impactPage": {"title": "About Tulsa Local News Initiative", "url": "https://www.localnewsfortulsa.org/about-us"}, "status": "found", "location": {"state": "OK", "tile": [4, 6], "lat": 36.15, "lng": -95.99}}, {"outlet": "VTDigger", "outletSlug": "vtdigger", "homepage": "https://vtdigger.org/", "reports": [{"title": "2025 Annual Report", "url": "https://vtdigger.org/2025-annual-report/", "year": 2025, "format": "html"}, {"title": "2024 Annual Report", "url": "https://vtdigger.org/2024-annual-report/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "VT", "tile": [9, 1], "lat": 44.26, "lng": -72.58}}, {"outlet": "WFAE", "outletSlug": "wfae", "homepage": "https://www.wfae.org/", "reports": [], "impactPage": {"title": "Annual Reports & Public Information", "url": "https://www.wfae.org/public-information"}, "status": "found", "location": {"state": "NC", "tile": [8, 5], "lat": 35.23, "lng": -80.84}}, {"outlet": "Wisconsin Watch", "outletSlug": "wisconsin-watch", "homepage": "https://wisconsinwatch.org/", "reports": [{"title": "2022 Annual Report", "url": "https://wisconsinwatch.org/wp-content/uploads/2023/08/Wisconsin-Watch-2022-annual-report_reduced.pdf", "year": 2022, "format": "pdf", "new": true}], "impactPage": {"title": "Annual Reports", "url": "https://wisconsinwatch.org/annual-reports/"}, "status": "found", "location": {"state": "WI", "tile": [6, 2], "lat": 43.07, "lng": -89.4}}, {"outlet": "WyoFile", "outletSlug": "wyofile", "homepage": "https://wyofile.com/", "reports": [{"title": "2024 Annual Report", "url": "https://wyofile.com/wp-content/uploads/2025/04/WyoFile-Annual-Report-2024_final.pdf", "year": 2024, "format": "pdf"}], "impactPage": {"title": "Reports", "url": "https://wyofile.com/about/reports/"}, "status": "found", "location": {"state": "WY", "tile": [3, 3], "lat": 42.83, "lng": -108.73}}, {"outlet": "The LA Local", "outletSlug": "the-la-local", "homepage": "https://thelalocal.org/", "reports": [{"title": "Welcome to The LA Local: We Built This Newsroom for You (Launch Manifesto)", "url": "https://thelalocal.org/news/welcome-to-the-la-local-we-built-this-newsroom-for-you/", "year": 2025, "format": "html"}], "impactPage": {"title": "About The LA Local", "url": "https://thelalocal.org/about/"}, "status": "found", "location": {"state": "CA", "tile": [1, 5], "lat": 34.05, "lng": -118.24}}, {"outlet": "Nashville Banner", "outletSlug": "nashville-banner", "homepage": "https://nashvillebanner.com/", "reports": [{"title": "The 2024-25 Nashville Banner Impact Report", "url": "https://nashvillebanner.com/2025/08/12/nashville-banner-impact-report/", "year": 2025, "format": "html"}, {"title": "Best of the Banner 2024 (Year-in-Review)", "url": "https://nashvillebanner.com/newsletter/best-of-the-banner-2024/", "year": 2024, "format": "html"}], "impactPage": null, "status": "found", "location": {"state": "TN", "tile": [7, 5], "lat": 36.16, "lng": -86.78}}]</script>
+<script id="tile-data" type="application/json">[{"state": "AK", "row": 1, "col": 0, "label": "AK"}, {"state": "ME", "row": 0, "col": 10, "label": "ME"}, {"state": "VT", "row": 1, "col": 9, "label": "VT"}, {"state": "NH", "row": 1, "col": 10, "label": "NH"}, {"state": "WA", "row": 2, "col": 1, "label": "WA"}, {"state": "MT", "row": 2, "col": 2, "label": "MT"}, {"state": "ND", "row": 2, "col": 3, "label": "ND"}, {"state": "MN", "row": 2, "col": 4, "label": "MN"}, {"state": "WI", "row": 2, "col": 5, "label": "WI"}, {"state": "MI", "row": 2, "col": 7, "label": "MI"}, {"state": "NY", "row": 2, "col": 9, "label": "NY"}, {"state": "MA", "row": 2, "col": 10, "label": "MA"}, {"state": "OR", "row": 3, "col": 1, "label": "OR"}, {"state": "ID", "row": 3, "col": 2, "label": "ID"}, {"state": "WY", "row": 3, "col": 3, "label": "WY"}, {"state": "SD", "row": 3, "col": 4, "label": "SD"}, {"state": "IA", "row": 3, "col": 5, "label": "IA"}, {"state": "IL", "row": 3, "col": 6, "label": "IL"}, {"state": "IN", "row": 3, "col": 7, "label": "IN"}, {"state": "OH", "row": 3, "col": 8, "label": "OH"}, {"state": "PA", "row": 3, "col": 9, "label": "PA"}, {"state": "CT", "row": 3, "col": 10, "label": "CT"}, {"state": "NV", "row": 4, "col": 2, "label": "NV"}, {"state": "UT", "row": 4, "col": 3, "label": "UT"}, {"state": "CO", "row": 4, "col": 4, "label": "CO"}, {"state": "NE", "row": 4, "col": 5, "label": "NE"}, {"state": "MO", "row": 4, "col": 6, "label": "MO"}, {"state": "KY", "row": 4, "col": 7, "label": "KY"}, {"state": "WV", "row": 4, "col": 8, "label": "WV"}, {"state": "VA", "row": 4, "col": 9, "label": "VA"}, {"state": "NJ", "row": 4, "col": 10, "label": "NJ"}, {"state": "CA", "row": 5, "col": 1, "label": "CA"}, {"state": "AZ", "row": 5, "col": 2, "label": "AZ"}, {"state": "NM", "row": 5, "col": 3, "label": "NM"}, {"state": "KS", "row": 5, "col": 4, "label": "KS"}, {"state": "OK", "row": 5, "col": 5, "label": "OK"}, {"state": "AR", "row": 5, "col": 6, "label": "AR"}, {"state": "TN", "row": 5, "col": 7, "label": "TN"}, {"state": "NC", "row": 5, "col": 8, "label": "NC"}, {"state": "SC", "row": 5, "col": 9, "label": "SC"}, {"state": "DC", "row": 5, "col": 10, "label": "DC"}, {"state": "HI", "row": 6, "col": 0, "label": "HI"}, {"state": "TX", "row": 6, "col": 4, "label": "TX"}, {"state": "LA", "row": 6, "col": 5, "label": "LA"}, {"state": "MS", "row": 6, "col": 6, "label": "MS"}, {"state": "AL", "row": 6, "col": 7, "label": "AL"}, {"state": "GA", "row": 6, "col": 8, "label": "GA"}, {"state": "FL", "row": 7, "col": 9, "label": "FL"}, {"state": "PR", "row": 7, "col": 10, "label": "PR"}]</script>
 <script>
 (function () {
-  var data = JSON.parse(document.getElementById('impact-data').textContent);
+  const data = JSON.parse(document.getElementById('impact-data').textContent);
+  const tiles = JSON.parse(document.getElementById('tile-data').textContent);
+  const listEl = document.getElementById('list');
+  const filterEl = document.getElementById('filter');
+  const sortEl = document.getElementById('sort');
+  const btnList = document.getElementById('btn-list');
+  const btnMap = document.getElementById('btn-map');
+  const listView = document.getElementById('list-view');
+  const mapView = document.getElementById('map-view');
+  const mapGrid = document.getElementById('map-grid');
+  const mapDetail = document.getElementById('map-detail');
 
-  var scanDate = new Date();
-  var fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
-    hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
-  });
-  document.getElementById('scanned-stamp').textContent = fmt.format(scanDate);
-
-  var indexedCount = data.filter(function (o) { return o.status === 'found'; }).length;
-  var totalReports = data.reduce(function (sum, o) { return sum + (o.reports ? o.reports.length : 0); }, 0);
-  var newCount = 0;
-  data.forEach(function (o) {
-    (o.reports || []).forEach(function (r) { if (r['new']) newCount++; });
-    if (o.impactPage && o.impactPage['new']) newCount++;
-  });
-
-  var chipsEl = document.getElementById('summary-chips');
-  var chips = [
-    '<span class="chip">' + indexedCount + ' of 39 outlets indexed</span>',
-    '<span class="chip">' + totalReports + ' reports total</span>'
-  ];
-  if (newCount > 0) {
-    chips.push('<span class="chip new">' + newCount + ' new since last scan</span>');
-  }
-  chipsEl.innerHTML = chips.join('');
-
-  function getRecentYear(o) {
-    var yrs = (o.reports || []).map(function (r) { return r.year || 0; });
-    return yrs.length ? Math.max.apply(null, yrs) : 0;
+  function esc(s) {
+    return (s == null ? '' : String(s)).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
-    });
+  function latestYear(o) {
+    let maxY = -Infinity;
+    (o.reports || []).forEach(r => { if (typeof r.year === 'number' && r.year > maxY) maxY = r.year; });
+    return Number.isFinite(maxY) ? maxY : -Infinity;
   }
 
-  function renderCard(report) {
-    var badges = [];
-    if (report.year) badges.push('<span class="badge year">' + report.year + '</span>');
-    if (report.format === 'pdf') badges.push('<span class="badge format-pdf">PDF</span>');
-    else badges.push('<span class="badge format-html">HTML</span>');
-    if (report['new']) badges.push('<span class="badge new">NEW</span>');
-    return '<div class="report-card">' +
-      '<div class="report-title"><a href="' + escapeHtml(report.url) + '" target="_blank" rel="noopener">' +
-        escapeHtml(report.title) + '</a></div>' +
-      '<div class="badges">' + badges.join('') + '</div>' +
-    '</div>';
+  function sortFn(mode) {
+    return (a, b) => {
+      // Always sink no_reports_found to bottom
+      const aFound = a.status === 'found' ? 0 : 1;
+      const bFound = b.status === 'found' ? 0 : 1;
+      if (aFound !== bFound) return aFound - bFound;
+      if (mode === 'alpha') return a.outlet.localeCompare(b.outlet);
+      if (mode === 'count') {
+        const d = (b.reports?.length || 0) - (a.reports?.length || 0);
+        if (d !== 0) return d;
+        return a.outlet.localeCompare(b.outlet);
+      }
+      // 'latest'
+      const ay = latestYear(a), by = latestYear(b);
+      if (ay !== by) return by - ay;
+      return a.outlet.localeCompare(b.outlet);
+    };
+  }
+
+  function renderReportCard(r) {
+    const yearTxt = (typeof r.year === 'number') ? r.year : '';
+    const fmt = (r.format || 'html').toUpperCase();
+    const newBadge = r.new ? '<span class="badge new">NEW</span>' : '';
+    return `
+      <a class="report-card" href="${esc(r.url)}" target="_blank" rel="noopener">
+        <div class="title">${esc(r.title)}</div>
+        <div class="meta">
+          ${yearTxt ? `<span>${yearTxt}</span>` : ''}
+          <span class="badge ${fmt.toLowerCase()}">${fmt}</span>
+          ${newBadge}
+        </div>
+      </a>`;
   }
 
   function renderRow(o) {
-    var reports = (o.reports || []).slice().sort(function (a, b) {
-      return (b.year || 0) - (a.year || 0);
+    const reports = (o.reports || []).slice().sort((a, b) => {
+      const ay = (typeof a.year === 'number') ? a.year : -Infinity;
+      const by = (typeof b.year === 'number') ? b.year : -Infinity;
+      return by - ay;
     });
-    var rightHtml = '';
-    if (reports.length === 0 && o.impactPage) {
-      rightHtml = '<div class="empty-note">Permanent <em>Our Impact</em> landing page only &mdash; no dated reports indexed.</div>';
-    } else if (reports.length === 0) {
-      rightHtml = '<div class="empty-note">No impact reports indexed yet &mdash; try again later.</div>';
+    const primary = reports[0];
+    const earlier = reports.slice(1, 3);
+    const impact = o.impactPage;
+    const isFound = o.status === 'found';
+
+    let rightHtml;
+    if (!isFound) {
+      rightHtml = `<div class="no-reports">No impact reports indexed yet — try again later.</div>`;
+    } else if (!primary) {
+      rightHtml = impact
+        ? `<div class="no-reports">Permanent "Our Impact" page only — no dated report indexed.</div>`
+        : `<div class="no-reports">No dated reports indexed.</div>`;
     } else {
-      rightHtml = renderCard(reports[0]);
-      if (reports.length > 1) {
-        var rest = reports.slice(1);
-        var liItems = rest.map(function (r) {
-          var meta = [];
-          if (r.year) meta.push(r.year);
-          meta.push(r.format === 'pdf' ? 'PDF' : 'HTML');
-          if (r['new']) meta.push('NEW');
-          return '<li><a href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener">' +
-            escapeHtml(r.title) + '</a><span class="li-meta">' + meta.join(' &middot; ') + '</span></li>';
-        }).join('');
-        rightHtml += '<details class="older"><summary>+' + rest.length + ' earlier report' +
-          (rest.length === 1 ? '' : 's') + '</summary><ul>' + liItems + '</ul></details>';
+      let earlierHtml = '';
+      if (earlier.length) {
+        earlierHtml = `
+          <details class="earlier">
+            <summary>+${earlier.length} earlier report${earlier.length > 1 ? 's' : ''}</summary>
+            <ul>${earlier.map(r => `
+              <li>
+                <a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>
+                ${typeof r.year === 'number' ? `<span style="color:var(--muted);font-size:12px;"> · ${r.year}</span>` : ''}
+                ${r.new ? '<span class="badge new" style="margin-left:6px;">NEW</span>' : ''}
+              </li>`).join('')}</ul>
+          </details>`;
+      }
+      rightHtml = `<div class="reports">${renderReportCard(primary)}${earlierHtml}</div>`;
+    }
+
+    const impactPill = (isFound && impact)
+      ? `<a class="impact-pill ${impact.new ? 'new' : ''}" href="${esc(impact.url)}" target="_blank" rel="noopener">${esc(impact.title || 'Our Impact')}</a>`
+      : '';
+
+    return `
+      <div class="outlet-row" data-slug="${esc(o.outletSlug)}" data-name="${esc(o.outlet.toLowerCase())}">
+        <div class="outlet-meta">
+          <a class="outlet-name" href="${esc(o.homepage)}" target="_blank" rel="noopener">${esc(o.outlet)}</a>
+          <span class="homepage">${esc(o.homepage)}</span>
+          ${impactPill}
+        </div>
+        <div class="outlet-reports">${rightHtml}</div>
+      </div>`;
+  }
+
+  function renderList() {
+    const q = (filterEl.value || '').trim().toLowerCase();
+    const mode = sortEl.value;
+    const filtered = data
+      .filter(o => !q || o.outlet.toLowerCase().includes(q))
+      .sort(sortFn(mode));
+    listEl.innerHTML = filtered.map(renderRow).join('');
+  }
+
+  filterEl.addEventListener('input', renderList);
+  sortEl.addEventListener('change', renderList);
+
+  // -- MAP view --
+  // Group outlets by state via outlet.location.state
+  const stateMap = {};
+  data.forEach(o => {
+    const st = o.location && o.location.state;
+    if (!st) return;
+    (stateMap[st] = stateMap[st] || []).push(o);
+  });
+
+  function hasNewIn(stateCode) {
+    const arr = stateMap[stateCode] || [];
+    return arr.some(o =>
+      (o.reports || []).some(r => r.new) || ((o.impactPage || {}).new)
+    );
+  }
+
+  function buildMap() {
+    // determine grid bounds
+    let maxRow = 0, maxCol = 0;
+    tiles.forEach(t => { if (t.row > maxRow) maxRow = t.row; if (t.col > maxCol) maxCol = t.col; });
+    // Build a sparse grid
+    const cells = new Map();
+    tiles.forEach(t => cells.set(`${t.row}-${t.col}`, t));
+    const cols = 11, rows = maxRow + 1;
+    mapGrid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+    let html = '';
+    for (let r = 0; r <= maxRow; r++) {
+      for (let c = 0; c < cols; c++) {
+        const tile = cells.get(`${r}-${c}`);
+        if (!tile) {
+          html += `<div></div>`;
+          continue;
+        }
+        const list = stateMap[tile.state] || [];
+        const has = list.length > 0;
+        const isNew = has && hasNewIn(tile.state);
+        const countBadge = list.length > 1 ? `<span class="count-badge">${list.length}</span>` : '';
+        html += `<div class="map-tile ${has ? 'has-outlets' : ''} ${isNew ? 'has-new' : ''}" data-state="${tile.state}" title="${tile.state}${has ? ' — ' + list.map(o=>o.outlet).join(', ') : ''}">${tile.label}${countBadge}</div>`;
       }
     }
-
-    var impactPillHtml = '';
-    if (o.impactPage) {
-      impactPillHtml = '<a class="impact-pill" href="' + escapeHtml(o.impactPage.url) +
-        '" target="_blank" rel="noopener">' + escapeHtml(o.impactPage.title || 'Our Impact') + ' &rarr;</a>';
-    }
-
-    var metaText = o.status === 'found' ?
-      (reports.length + ' report' + (reports.length === 1 ? '' : 's') + (o.impactPage ? ' &middot; landing page' : '')) :
-      'No reports indexed';
-
-    return '<div class="outlet-row" data-name="' + escapeHtml(o.outlet.toLowerCase()) +
-      '" data-status="' + escapeHtml(o.status) + '">' +
-      '<div class="outlet-left">' +
-        '<div class="outlet-name"><a href="' + escapeHtml(o.homepage) + '" target="_blank" rel="noopener">' +
-          escapeHtml(o.outlet) + '</a></div>' +
-        '<div class="outlet-meta">' + metaText + '</div>' +
-        impactPillHtml +
-      '</div>' +
-      '<div class="outlet-right">' + rightHtml + '</div>' +
-    '</div>';
+    mapGrid.innerHTML = html;
+    mapGrid.querySelectorAll('.map-tile.has-outlets').forEach(el => {
+      el.addEventListener('click', () => selectState(el.dataset.state));
+    });
   }
 
-  function sortData(mode) {
-    var arr = data.slice();
-    if (mode === 'name') {
-      arr.sort(function (a, b) { return a.outlet.localeCompare(b.outlet); });
-    } else if (mode === 'most') {
-      arr.sort(function (a, b) {
-        var diff = (b.reports || []).length - (a.reports || []).length;
-        if (diff !== 0) return diff;
-        return a.outlet.localeCompare(b.outlet);
-      });
-    } else {
-      // recent (default): by latest year desc; no_reports_found sinks to bottom (alpha)
-      arr.sort(function (a, b) {
-        var aFound = a.status === 'found' ? 1 : 0;
-        var bFound = b.status === 'found' ? 1 : 0;
-        if (aFound !== bFound) return bFound - aFound;
-        if (aFound === 0 && bFound === 0) {
-          return a.outlet.localeCompare(b.outlet);
-        }
-        var ya = getRecentYear(a);
-        var yb = getRecentYear(b);
-        if (yb !== ya) return yb - ya;
-        var ra = (a.reports || []).length;
-        var rb = (b.reports || []).length;
-        if (rb !== ra) return rb - ra;
-        return a.outlet.localeCompare(b.outlet);
-      });
+  function selectState(stateCode) {
+    const outlets = stateMap[stateCode] || [];
+    if (!outlets.length) {
+      mapDetail.className = 'empty';
+      mapDetail.textContent = 'No newsroom in this state.';
+      return;
     }
-    return arr;
+    mapDetail.className = '';
+    let html = `<h3>${stateCode} — ${outlets.length} newsroom${outlets.length>1?'s':''}</h3>`;
+    outlets.forEach(o => {
+      const repCount = (o.reports || []).length;
+      const ip = o.impactPage;
+      const newFlag = (o.reports || []).some(r=>r.new) || (ip && ip.new) ? ' <span class="badge new">NEW</span>' : '';
+      const reportsLine = repCount
+        ? `${repCount} report${repCount>1?'s':''}`
+        : (ip ? 'Permanent impact page only' : 'No reports indexed');
+      html += `
+        <div class="outlet-line">
+          <a href="${esc(o.homepage)}" target="_blank" rel="noopener">${esc(o.outlet)}</a>${newFlag}
+          <div class="reports-info">${reportsLine}</div>
+        </div>`;
+    });
+    mapDetail.innerHTML = html;
   }
 
-  function render() {
-    var mode = document.getElementById('sort-select').value;
-    var q = document.getElementById('search-input').value.trim().toLowerCase();
-    var yearFilter = document.getElementById('year-filter').value;
-    var arr = sortData(mode);
-    if (q) {
-      arr = arr.filter(function (o) { return o.outlet.toLowerCase().indexOf(q) !== -1; });
-    }
-    if (yearFilter !== 'all') {
-      var yr = parseInt(yearFilter, 10);
-      arr = arr.filter(function (o) {
-        return (o.reports || []).some(function (r) { return r.year === yr; });
-      });
-    }
-    var container = document.getElementById('outlets');
-    var emptyEl = document.getElementById('empty-search');
-    if (arr.length === 0) {
-      container.innerHTML = '';
-      emptyEl.style.display = 'block';
-    } else {
-      emptyEl.style.display = 'none';
-      container.innerHTML = arr.map(renderRow).join('');
-    }
+  function showList() {
+    btnList.classList.add('active'); btnList.setAttribute('aria-selected','true');
+    btnMap.classList.remove('active'); btnMap.setAttribute('aria-selected','false');
+    listView.classList.remove('hidden');
+    mapView.classList.remove('active');
   }
+  function showMap() {
+    btnMap.classList.add('active'); btnMap.setAttribute('aria-selected','true');
+    btnList.classList.remove('active'); btnList.setAttribute('aria-selected','false');
+    listView.classList.add('hidden');
+    mapView.classList.add('active');
+  }
+  btnList.addEventListener('click', showList);
+  btnMap.addEventListener('click', showMap);
 
-  document.getElementById('search-input').addEventListener('input', render);
-  document.getElementById('sort-select').addEventListener('change', render);
-  document.getElementById('year-filter').addEventListener('change', render);
-  render();
+  renderList();
+  buildMap();
 })();
 </script>
 </body>
